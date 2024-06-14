@@ -6,7 +6,6 @@ import java.security.SecureRandom;
 import Model.User;
 import View.Inputs;
 import View.Outputs;
-
 public class UserController {
     ArrayList<User> users = new ArrayList<>() ;
     Outputs output ;
@@ -27,14 +26,16 @@ public class UserController {
         if(Password.equals("random")){
             Password = generatePassword() ;
             output.ShowPass(Password) ;
-            if(!Password.equals(input.getinput())){
+            if(!Password.equals(input.getInput())){
                 output.PasswordNotMatch();
                 return;
             }
-        }else if(!Password.equals(PassConfirm)){
+        }
+        else if(!Password.equals(PassConfirm)){
             output.PasswordNotMatch();
             return;
-        }else if(Password.length()<8 || !checkPassword(Password)){
+        }
+        else if(Password.length()<8 || !checkPassword(Password)){
             output.InvalidPass();
             return;
         }
@@ -47,6 +48,79 @@ public class UserController {
         input.askQE();
         //injaro bayad kamel konam (soal amniati moonde)
         users.add(new User(Username , Password , Nickname , Email , FatherName , Color , Pet)) ;
+    }
+    User login(String Username , String Password){
+        User user = getByUsername(Username) ;
+        if(user==null){
+            output.UserNotFound();
+            return null ;
+        }else if(!user.getPassword().equals(Password)){
+            output.wrongPass() ;
+            return null ;
+        }
+        return user ;
+    }
+    void forgePass(String Username){
+        User user = getByUsername(Username) ;
+        if(user==null){
+            output.UserNotFound();
+            return;
+        }else{
+            String FatherName="" , Color="" , Pet="" ;
+            //injaro bayad kamel konam (soal amniati)
+            if(!user.getFathersName().equals(FatherName) && !user.getColor().equals(Color) && !user.getPet().equals(Pet)){
+                output.WrongSecurityQE();
+                return;
+            }else{
+                user.setPassword(input.getInput());
+                output.changedPass();
+            }
+        }
+    }
+    User changeUsername(String username , String newUser){
+        User user = getByUsername(username) ;
+        if(!newUser.matches("[a-zA-Z0-9]+")){
+            output.invalidUsername();
+        }else  if(getByUsername(newUser)!=null){
+            output.DuplicatedUsername();
+        }else{
+            user.setUsername(newUser);
+            output.changedUsername();
+        }
+        return user;
+    }
+    User changeNickname(String username , String nickname){
+        User user = getByUsername(username) ;
+        user.setNickname(nickname);
+        output.changedNickname();
+        return user;
+    }
+    User changePass(String username , String CurrentPass , String Pass){
+        User user = getByUsername(username) ;
+        if(!user.getPassword().equals(CurrentPass)){
+            output.wrongPass();
+        }
+        else if(CurrentPass.equals(Pass)){
+            output.DuplicatedPass();
+        }
+        else if(Pass.length()<8 || !checkPassword(Pass)){
+            output.InvalidPass();
+        }
+        else{
+            user.setPassword(Pass);
+            output.changedPass();
+        }
+        return user;
+    }
+    User changeEmail(String username , String email){
+        User user = getByUsername(username) ;
+        if(!isValidEmail(email)){
+            output.InvalidEmail();
+        }else{
+            user.setEmail(email);
+            output.changedEmail();
+        }
+        return user;
     }
     User getByUsername(String username){
         for(User user : users){

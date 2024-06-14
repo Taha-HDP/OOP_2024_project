@@ -9,7 +9,7 @@ public class Inputs {
         System.out.println("\t . What was the name of your first pet ?") ;
 
     }
-    public String getinput(){
+    public String getInput(){
         return scanner.nextLine() ;
     }
 }

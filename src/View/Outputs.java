@@ -26,4 +26,12 @@ public class Outputs {
     public void PasswordNotMatch(){
         System.out.println("your password and confirmation not match") ;
     }
+    public void UserNotFound(){System.out.println("Username don't exist");}
+    public void wrongPass(){System.out.println("Password and username don't match");}
+    public void WrongSecurityQE(){System.out.println("sequrity answer is wrong");}
+    public void changedPass(){System.out.println("password successfully changed");}
+    public void changedUsername(){System.out.println("username successfully changed");}
+    public void changedNickname(){System.out.println("nickname successfully changed");}
+    public void changedEmail(){System.out.println("email successfully changed");}
+    public void DuplicatedPass(){System.out.println("please enter new Password");}
 }
