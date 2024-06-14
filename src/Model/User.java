@@ -1,14 +1,16 @@
 package Model;
 
 public class User {
-    private String Username , Password , Nickname , Email , RecQe ;
+    private String Username , Password , Nickname , Email , FathersName , Color , Pet ;
     private int Level=1 , HP = 100 , XP=0 , Gold = 1000 ;
-    public User(String username, String password, String nickname, String email, String recQe) {
+    public User(String username, String password, String nickname, String email, String fathersName , String color , String pet) {
         this.Username = username;
         this.Password = password;
         this.Nickname = nickname;
         this.Email = email;
-        this.RecQe = recQe;
+        this.FathersName = fathersName;
+        this.Color = color ;
+        this.Pet = pet ;
     }
 
     public void setUsername(String username) {
@@ -25,10 +27,6 @@ public class User {
 
     public void setEmail(String email) {
         this.Email = email;
-    }
-
-    public void setRecQe(String recQe) {
-        this.RecQe = recQe;
     }
 
     public void setLevel(int level) {
@@ -63,10 +61,6 @@ public class User {
         return this.Email;
     }
 
-    public String getRecQe() {
-        return this.RecQe;
-    }
-
     public int getLevel() {
         return Level;
     }
@@ -81,5 +75,29 @@ public class User {
 
     public int getGold() {
         return Gold;
+    }
+
+    public String getFathersName() {
+        return FathersName;
+    }
+
+    public void setFathersName(String fathersName) {
+        FathersName = fathersName;
+    }
+
+    public String getColor() {
+        return Color;
+    }
+
+    public void setColor(String color) {
+        Color = color;
+    }
+
+    public String getPet() {
+        return Pet;
+    }
+
+    public void setPet(String pet) {
+        Pet = pet;
     }
 }
