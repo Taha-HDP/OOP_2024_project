@@ -65,13 +65,15 @@ public class UserController {
         if(user==null){
             output.UserNotFound();
             return;
-        }else{
+        }
+        else{
             String FatherName="" , Color="" , Pet="" ;
             //injaro bayad kamel konam (soal amniati)
             if(!user.getFathersName().equals(FatherName) && !user.getColor().equals(Color) && !user.getPet().equals(Pet)){
                 output.WrongSecurityQE();
                 return;
-            }else{
+            }
+            else{
                 user.setPassword(input.getInput());
                 output.changedPass();
             }
