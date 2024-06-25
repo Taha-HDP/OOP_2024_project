@@ -12,7 +12,7 @@ public class Outputs {
     }
     public void ShowPass(String Password){
         System.out.println("your random password : " + Password);
-        System.out.print("please enter your password");
+        System.out.print("please enter your password : ");
     }
     public void InvalidPass(){
         System.out.println("your password must have a capital and small and character !");

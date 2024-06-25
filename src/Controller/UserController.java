@@ -26,9 +26,12 @@ public class UserController {
         if(Password.equals("random")){
             Password = generatePassword() ;
             output.ShowPass(Password) ;
-            if(!Password.equals(input.getInput())){
-                output.PasswordNotMatch();
-                return;
+            while(true){
+                if(!Password.equals(input.getInput())){
+                    output.PasswordNotMatch();
+                }else {
+                    break;
+                }
             }
         }
         else if(!Password.equals(PassConfirm)){
