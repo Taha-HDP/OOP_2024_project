@@ -46,7 +46,7 @@ public class MainMenu {
                 System.out.println("main menu");
             //exit
             else if (input.equals("exit"))
-                break;
+                System.exit(0);
             //invalid command
             else
                 System.out.println("invalid command");

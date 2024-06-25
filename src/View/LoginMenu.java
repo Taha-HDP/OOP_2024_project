@@ -35,7 +35,7 @@ public class LoginMenu {
                 System.out.println("login menu");
             //exit
             else if (input.equals("exit"))
-                break;
+                System.exit(0);
             //invalid command
             else
                 System.out.println("invalid command");

@@ -49,7 +49,7 @@ public class ProfileMenu {
                 System.out.println("profile menu");
             //exit
             else if (input.equals("exit"))
-                break;
+                System.exit(0);
             //back to main
             else if (input.equals("back"))
                 MainMenu.run(scanner);

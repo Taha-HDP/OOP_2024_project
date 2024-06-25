@@ -27,7 +27,7 @@ public class AdminMenu {
                     System.out.println(user.getUsername() + " | " + user.getLevel() + " | " + user.getGold());
                 }
             }else if (input.equals("exit"))
-                break;
+                System.exit(0);
             else{
                 System.out.println("invalid command");
             }
@@ -277,6 +277,7 @@ public class AdminMenu {
         if(answer.equals("y")){
             Card mainCard = cards.get(cardNumber-1) ;
             CC.removeCard(mainCard);
+            System.out.println("successfully removed");
         }
         run(scanner) ;
         return;
