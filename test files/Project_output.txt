@@ -1,0 +1,22 @@
+your password and confirmation not match
+your password must have a capital and small and character !
+and it must be minimum 8 characters
+your password must have a capital and small and character !
+and it must be minimum 8 characters
+your password must have a capital and small and character !
+and it must be minimum 8 characters
+your Email is invalid
+User created successfully
+please chose a security question :
+	 . What is your father's name ?
+	 . What is your favourite color ?
+	 . What was the name of your first pet ?
+answer and answer confirm is not same ! try again
+invalid number
+answer 1 accepted
+answer 2 accepted
+answer 3 accepted
+Successfully saved
+Username don't exist
+Password and username don't match
+logged in successfully !
