@@ -37,7 +37,7 @@ public class Inputs {
                     answers.add(ans1) ;
                     answers.add(ans2) ;
                     answers.add(ans3) ;
-                    System.out.println("Successfully saved");
+                    System.out.println("all question answered");
                     return answers;
                 }
             }else{

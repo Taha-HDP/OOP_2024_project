@@ -3,11 +3,13 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.security.SecureRandom;
+
+import Model.Card;
 import Model.User;
 import View.Inputs;
 import View.Outputs;
 public class UserController {
-    ArrayList<User> users = new ArrayList<>() ;
+    static ArrayList<User> users = new ArrayList<>() ;
     Outputs output = new Outputs() ;
     Inputs input = new Inputs();
     public void CreateUser(String Username, String Password, String PassConfirm, String Email, String Nickname){
@@ -74,27 +76,30 @@ public class UserController {
         }
         else{
             String FatherName="" , Color="" , Pet="" ;
-            ArrayList<String> answers = input.askQE();
-            FatherName = answers.get(0);
-            Color = answers.get(1);
-            Pet = answers.get(2);
-            if(!user.getFathersName().equals(FatherName) && !user.getColor().equals(Color) && !user.getPet().equals(Pet)){
-                output.WrongSecurityQE();
-                return;
+            while(true){
+                ArrayList<String> answers = input.askQE();
+                FatherName = answers.get(0);
+                Color = answers.get(1);
+                Pet = answers.get(2);
+                if(!user.getFathersName().equals(FatherName) || !user.getColor().equals(Color) || !user.getPet().equals(Pet)){
+                    output.WrongSecurityQE();
+                }else{
+                    break ;
+                }
             }
-            else{
+            while(true){
                 String newPass = input.getInput();
                 if(newPass.length()<8 || !checkPassword(newPass)){
                     output.InvalidPass();
-                    return;
+                } else{
+                    user.setPassword(newPass);
+                    output.changedPass();
+                    break ;
                 }
-                user.setPassword(newPass);
-                output.changedPass();
             }
         }
     }
-    User changeUsername(String username , String newUser){
-        User user = getByUsername(username) ;
+    public User changeUsername(User user , String newUser){
         if(!newUser.matches("[a-zA-Z0-9]+")){
             output.invalidUsername();
         }else  if(getByUsername(newUser)!=null){
@@ -105,14 +110,12 @@ public class UserController {
         }
         return user;
     }
-    User changeNickname(String username , String nickname){
-        User user = getByUsername(username) ;
+    public User changeNickname(User user , String nickname){
         user.setNickname(nickname);
         output.changedNickname();
         return user;
     }
-    User changePass(String username , String CurrentPass , String Pass){
-        User user = getByUsername(username) ;
+    public User changePass(User user, String CurrentPass , String Pass){
         if(!user.getPassword().equals(CurrentPass)){
             output.wrongPass();
         }
@@ -123,13 +126,21 @@ public class UserController {
             output.InvalidPass();
         }
         else{
-            user.setPassword(Pass);
-            output.changedPass();
+            while(true){
+                System.out.println("please renter your new password again : ");
+                String checkPass = input.getInput();
+                if(checkPass.equals(Pass)){
+                    user.setPassword(Pass);
+                    output.changedPass();
+                    return user ;
+                }else{
+                    System.out.println("not match! please try again");
+                }
+            }
         }
-        return user;
+        return user ;
     }
-    User changeEmail(String username , String email){
-        User user = getByUsername(username) ;
+    public User changeEmail(User user , String email){
         if(!isValidEmail(email)){
             output.InvalidEmail();
         }else{

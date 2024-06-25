@@ -6,6 +6,9 @@ and it must be minimum 8 characters
 your password must have a capital and small and character !
 and it must be minimum 8 characters
 your Email is invalid
+your random password : "random pass"
+please enter your password : "random pass"
+your Email is invalid
 User created successfully
 please chose a security question :
 	 . What is your father's name ?
@@ -16,7 +19,58 @@ invalid number
 answer 1 accepted
 answer 2 accepted
 answer 3 accepted
-Successfully saved
+all question answered
+Username don't exist
+please chose a security question :
+	 . What is your father's name ?
+	 . What is your favourite color ?
+	 . What was the name of your first pet ?
+answer 1 accepted
+answer 2 accepted
+answer 3 accepted
+all question answered
+sequrity answer is wrong
+please chose a security question :
+	 . What is your father's name ?
+	 . What is your favourite color ?
+	 . What was the name of your first pet ?
+answer 1 accepted
+answer 2 accepted
+answer 3 accepted
+all question answered
+password successfully changed
 Username don't exist
 Password and username don't match
 logged in successfully !
+Main menu
+1- start game
+2- cards
+3- game history
+4- shop
+5- profile
+6- logout
+entered profile menu
+username : taha
+password : TahaHdp123!
+email : taha@gmail.com
+nickname : nickname
+xp : 0
+level : 1
+gold : 1000
+username successfully changed
+nickname successfully changed
+email successfully changed
+Password and username don't match
+your password must have a capital and small and character !
+and it must be minimum 8 characters
+please renter your new password again : "wrongpass"
+not match! please try again
+please renter your new password again : "correctPass"
+password successfully changed
+username : ali
+password : !newPass2
+email : ali@gmail.com
+nickname : HDP
+xp : 0
+level : 1
+gold : 1000

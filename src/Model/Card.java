@@ -1,14 +1,14 @@
 package Model;
 
 public class Card {
-    private String Name ;
+    private String Name , Type;
     private int HP , Damage , Duration;
-
-    public Card(String name, int HP, int damage, int duration) {
+    public Card(String name, int HP, int damage, int duration , String type) {
         this.Name = name;
         this.HP = HP;
         this.Damage = damage;
         this.Duration = duration;
+        this.Type = type ;
     }
 
     public String getName() {
@@ -41,5 +41,13 @@ public class Card {
 
     public void setDuration(int duration) {
         this.Duration = duration;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
     }
 }

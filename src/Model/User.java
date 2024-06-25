@@ -1,9 +1,13 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class User {
     private String Username , Password , Nickname , Email , FathersName , Color , Pet ;
-    private static User loggedInUser ;
+    private static User loggedInUser = null ;
+    private boolean firstLogin = true ;
     private int Level=1 , HP = 100 , XP=0 , Gold = 1000 ;
+    private ArrayList<Card> cards = new ArrayList<>() ;
     public User(String username, String password, String nickname, String email, String fathersName , String color , String pet) {
         this.Username = username;
         this.Password = password;
@@ -12,6 +16,14 @@ public class User {
         this.FathersName = fathersName;
         this.Color = color ;
         this.Pet = pet ;
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    public void addCards(Card card) {
+        this.cards.add(card) ;
     }
 
     public void setUsername(String username) {
@@ -28,6 +40,14 @@ public class User {
 
     public void setEmail(String email) {
         this.Email = email;
+    }
+
+    public boolean isFirstLogin() {
+        return firstLogin;
+    }
+
+    public void setFirstLogin(boolean firstLogin) {
+        this.firstLogin = firstLogin;
     }
 
     public void setLevel(int level) {
@@ -103,5 +123,9 @@ public class User {
     }
     public static void setLoggedInUser(User user) {
         User.loggedInUser = user;
+    }
+
+    public static User getLoggedInUser() {
+        return loggedInUser;
     }
 }

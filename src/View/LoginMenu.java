@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class LoginMenu {
     UserController UC = new UserController();
     public void run(Scanner scanner) {
+        System.out.println("entered login menu");
         while (true) {
             String input = scanner.nextLine();
             //user register
@@ -18,6 +19,11 @@ public class LoginMenu {
             else if (input.matches(Regexes.userLogin.pattern)) {
                 Matcher matcher = getCommandMatcher(input, Regexes.userLogin.pattern);
                 userLogin(matcher, scanner);
+            }
+            //forget password
+            else if (input.matches(Regexes.forgetPassword.pattern)) {
+                Matcher matcher = getCommandMatcher(input, Regexes.forgetPassword.pattern);
+                forgetPass(matcher, scanner);
             }
             //show menu name
             else if (input.matches(Regexes.showMenuName.pattern))
@@ -52,5 +58,10 @@ public class LoginMenu {
             System.out.println("logged in successfully !");
             MainMenu.run(scanner);
         }
+    }
+    private void forgetPass(Matcher matcher, Scanner scanner) {
+        matcher.find();
+        String username = matcher.group("username") ;
+        UC.forgetPass(username);
     }
 }

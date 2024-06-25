@@ -3,6 +3,7 @@ user create -u taha -p Taha Taha -email taha@.com -n nickname
 user create -u taha -p Taha12 Taha12 -email taha@.com -n nickname
 user create -u taha -p Taha12! Taha12! -email taha@.com -n nickname
 user create -u taha -p Taha123! Taha123! -email taha@.com -n nickname
+user create -u taha -p random Taha123! -email taha@.com -n nickname
 user create -u taha -p Taha123! Taha123! -email taha@gmail.com -n nickname
 
 question pick -q 5 -a ali -c al
@@ -11,6 +12,31 @@ question pick -q 1 -a ali -c ali
 question pick -q 2 -a red -c red
 question pick -q 3 -a jesi -c jesi
 
-user login -u tahaa -p Taha123!
+Forgot my Password -u tah
+Forgot my Password -u taha
+
+question pick -q 1 -a al -c al
+question pick -q 2 -a red -c red
+question pick -q 3 -a jesi -c jesi
+
+question pick -q 1 -a ali -c ali
+question pick -q 2 -a red -c red
+question pick -q 3 -a jesi -c jesi
+
+TahaHdp123!
+
+user login -u tahaa -p TahaHdp123!
 user login -u taha -p Tahaa123!
-user login -u taha -p Taha123!
+user login -u taha -p TahaHdp123!
+
+profile
+Show information
+Profile change -u ali
+Profile change -n HDP
+Profile change -e ali@gmail.com
+Profile change password -o taha -n newPass
+Profile change password -o TahaHdp123! -n newPass
+Profile change password -o TahaHdp123! -n !newPass2
+test
+!newPass2
+Show information
