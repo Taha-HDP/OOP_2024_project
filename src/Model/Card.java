@@ -2,13 +2,30 @@ package Model;
 
 public class Card {
     private String Name , Type;
-    private int HP , Damage , Duration;
-    public Card(String name, int HP, int damage, int duration , String type) {
+    private int HP , Damage , Duration , UpgradeLevel , UpgradeLeCost;
+    public Card(String name, int HP, int damage, int duration , int upgradeLevel , int upgradeLeCost) {
         this.Name = name;
         this.HP = HP;
         this.Damage = damage;
         this.Duration = duration;
-        this.Type = type ;
+        this.UpgradeLevel = upgradeLevel ;
+        this.UpgradeLeCost = upgradeLeCost ;
+    }
+
+    public int getUpgradeLevel() {
+        return UpgradeLevel;
+    }
+
+    public void setUpgradeLevel(int upgradeLevel) {
+        UpgradeLevel = upgradeLevel;
+    }
+
+    public int getUpgradeLeCost() {
+        return UpgradeLeCost;
+    }
+
+    public void setUpgradeLeCost(int upgradeLeCost) {
+        UpgradeLeCost = upgradeLeCost;
     }
 
     public String getName() {

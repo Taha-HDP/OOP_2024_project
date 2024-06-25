@@ -20,6 +20,11 @@ public class LoginMenu {
                 Matcher matcher = getCommandMatcher(input, Regexes.userLogin.pattern);
                 userLogin(matcher, scanner);
             }
+            //admin login
+            else if (input.matches(Regexes.adminLogin.pattern)) {
+                Matcher matcher = getCommandMatcher(input, Regexes.adminLogin.pattern);
+                adminLogin(matcher, scanner);
+            }
             //forget password
             else if (input.matches(Regexes.forgetPassword.pattern)) {
                 Matcher matcher = getCommandMatcher(input, Regexes.forgetPassword.pattern);
@@ -57,6 +62,14 @@ public class LoginMenu {
         if(loggedInUser!=null){
             System.out.println("logged in successfully !");
             MainMenu.run(scanner);
+        }
+    }
+    private void adminLogin(Matcher matcher, Scanner scanner) {
+        matcher.find();
+        String password = matcher.group("password") ;
+        if(password.equals("AdminPassword")){
+            System.out.println("admin logged in successfully !");
+            AdminMenu.run(scanner);
         }
     }
     private void forgetPass(Matcher matcher, Scanner scanner) {

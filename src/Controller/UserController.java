@@ -9,7 +9,7 @@ import Model.User;
 import View.Inputs;
 import View.Outputs;
 public class UserController {
-    static ArrayList<User> users = new ArrayList<>() ;
+    public static ArrayList<User> users = new ArrayList<>() ;
     Outputs output = new Outputs() ;
     Inputs input = new Inputs();
     public void CreateUser(String Username, String Password, String PassConfirm, String Email, String Nickname){
