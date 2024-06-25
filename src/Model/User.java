@@ -2,6 +2,7 @@ package Model;
 
 public class User {
     private String Username , Password , Nickname , Email , FathersName , Color , Pet ;
+    private static User loggedInUser ;
     private int Level=1 , HP = 100 , XP=0 , Gold = 1000 ;
     public User(String username, String password, String nickname, String email, String fathersName , String color , String pet) {
         this.Username = username;
@@ -99,5 +100,8 @@ public class User {
 
     public void setPet(String pet) {
         Pet = pet;
+    }
+    public static void setLoggedInUser(User user) {
+        User.loggedInUser = user;
     }
 }

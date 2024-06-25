@@ -16,6 +16,7 @@ public class Outputs {
     }
     public void InvalidPass(){
         System.out.println("your password must have a capital and small and character !");
+        System.out.println("and it must be minimum 8 characters");
     }
     public void InvalidEmail(){
         System.out.println("your Email is invalid");

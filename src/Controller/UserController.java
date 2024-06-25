@@ -8,9 +8,9 @@ import View.Inputs;
 import View.Outputs;
 public class UserController {
     ArrayList<User> users = new ArrayList<>() ;
-    Outputs output ;
-    Inputs input ;
-    void CreateUser(String Username , String Password , String PassConfirm , String Email , String Nickname){
+    Outputs output = new Outputs() ;
+    Inputs input = new Inputs();
+    public void CreateUser(String Username, String Password, String PassConfirm, String Email, String Nickname){
         if(Username.isEmpty() || Password.isEmpty() || PassConfirm.isEmpty() || Email.isEmpty() || Nickname.isEmpty() ){
             output.emptyFields() ;
             return;
@@ -45,11 +45,13 @@ public class UserController {
         }
         String FatherName="" , Color="" , Pet="" ;
         output.UserCreated();
-        input.askQE();
-        //injaro bayad kamel konam (soal amniati moonde)
+        ArrayList<String> answers = input.askQE();
+        FatherName = answers.get(0);
+        Color = answers.get(1);
+        Pet = answers.get(2);
         users.add(new User(Username , Password , Nickname , Email , FatherName , Color , Pet)) ;
     }
-    User login(String Username , String Password){
+    public User login(String Username , String Password){
         User user = getByUsername(Username) ;
         if(user==null){
             output.UserNotFound();
@@ -58,9 +60,10 @@ public class UserController {
             output.wrongPass() ;
             return null ;
         }
+        User.setLoggedInUser(user) ;
         return user ;
     }
-    void forgePass(String Username){
+    public void forgetPass(String Username){
         User user = getByUsername(Username) ;
         if(user==null){
             output.UserNotFound();
@@ -68,13 +71,21 @@ public class UserController {
         }
         else{
             String FatherName="" , Color="" , Pet="" ;
-            //injaro bayad kamel konam (soal amniati)
+            ArrayList<String> answers = input.askQE();
+            FatherName = answers.get(0);
+            Color = answers.get(1);
+            Pet = answers.get(2);
             if(!user.getFathersName().equals(FatherName) && !user.getColor().equals(Color) && !user.getPet().equals(Pet)){
                 output.WrongSecurityQE();
                 return;
             }
             else{
-                user.setPassword(input.getInput());
+                String newPass = input.getInput();
+                if(newPass.length()<8 || !checkPassword(newPass)){
+                    output.InvalidPass();
+                    return;
+                }
+                user.setPassword(newPass);
                 output.changedPass();
             }
         }
