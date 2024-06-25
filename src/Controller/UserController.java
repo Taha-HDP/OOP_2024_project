@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.security.SecureRandom;
-
-import Model.Card;
 import Model.User;
 import View.Inputs;
 import View.Outputs;
@@ -40,15 +38,15 @@ public class UserController {
             output.PasswordNotMatch();
             return;
         }
-        else if(Password.length()<8 || !checkPassword(Password)){
+        else if(Password.length()<8 || invalidPassword(Password)){
             output.InvalidPass();
             return;
         }
-        if(!isValidEmail(Email)){
+        if(invalidValidEmail(Email)){
             output.InvalidEmail();
             return;
         }
-        String FatherName="" , Color="" , Pet="" ;
+        String FatherName , Color , Pet ;
         output.UserCreated();
         ArrayList<String> answers = input.askQE();
         FatherName = answers.get(0);
@@ -72,10 +70,8 @@ public class UserController {
         User user = getByUsername(Username) ;
         if(user==null){
             output.UserNotFound();
-            return;
-        }
-        else{
-            String FatherName="" , Color="" , Pet="" ;
+        }else{
+            String FatherName , Color , Pet ;
             while(true){
                 ArrayList<String> answers = input.askQE();
                 FatherName = answers.get(0);
@@ -89,7 +85,7 @@ public class UserController {
             }
             while(true){
                 String newPass = input.getInput();
-                if(newPass.length()<8 || !checkPassword(newPass)){
+                if(newPass.length()<8 || invalidPassword(newPass)){
                     output.InvalidPass();
                 } else{
                     user.setPassword(newPass);
@@ -122,7 +118,7 @@ public class UserController {
         else if(CurrentPass.equals(Pass)){
             output.DuplicatedPass();
         }
-        else if(Pass.length()<8 || !checkPassword(Pass)){
+        else if(Pass.length()<8 || invalidPassword(Pass)){
             output.InvalidPass();
         }
         else{
@@ -141,7 +137,7 @@ public class UserController {
         return user ;
     }
     public User changeEmail(User user , String email){
-        if(!isValidEmail(email)){
+        if(invalidValidEmail(email)){
             output.InvalidEmail();
         }else{
             user.setEmail(email);
@@ -157,11 +153,10 @@ public class UserController {
         }
         return null ;
     }
-    public static boolean checkPassword(String input) {
+    public static boolean invalidPassword(String input) {
         boolean hasSmallLetter = false;
         boolean hasCapitalLetter = false;
         boolean hasCharacter = false;
-
         for (char c : input.toCharArray()) {
             if (Character.isLowerCase(c)) {
                 hasSmallLetter = true;
@@ -170,19 +165,17 @@ public class UserController {
             } else {
                 hasCharacter = true;
             }
-
             if (hasSmallLetter && hasCapitalLetter && hasCharacter) {
-                return true;
+                return false;
             }
         }
-
-        return false;
+        return true;
     }
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-    public static boolean isValidEmail(String email) {
+    public static boolean invalidValidEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        return !matcher.matches();
     }
     private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -203,5 +196,17 @@ public class UserController {
         }
 
         return password.toString();
+    }
+    public void changeXP(int value){
+        int xp = User.getLoggedInUser().getXP() ;
+        xp += value ;
+        int levelUp = (int) Math.pow(10,User.getLoggedInUser().getLevel());
+        int level = 0 ;
+        while (xp>=levelUp){
+            xp-=levelUp ;
+            level++ ;
+        }
+        User.getLoggedInUser().setXP(xp);
+        User.getLoggedInUser().setLevel(User.getLoggedInUser().getLevel()+level);
     }
 }

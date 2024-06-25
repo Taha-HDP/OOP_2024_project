@@ -2,14 +2,14 @@ package Model;
 
 public class Card {
     private String Name , Type;
-    private int HP , Damage , Duration , UpgradeLevel , UpgradeLeCost , level=1;
-    public Card(String name, int HP, int damage, int duration , int upgradeLevel , int upgradeLeCost) {
+    private int HP , Damage , Duration , UpgradeLevel , UpgradeCost, level=1;
+    public Card(String name, int HP, int damage, int duration , int upgradeLevel , int upgradeCost) {
         this.Name = name;
         this.HP = HP;
         this.Damage = damage;
         this.Duration = duration;
         this.UpgradeLevel = upgradeLevel ;
-        this.UpgradeLeCost = upgradeLeCost ;
+        this.UpgradeCost = upgradeCost;
         this.Type = "normal" ;
     }
 
@@ -29,12 +29,12 @@ public class Card {
         UpgradeLevel = upgradeLevel;
     }
 
-    public int getUpgradeLeCost() {
-        return UpgradeLeCost;
+    public int getUpgradeCost() {
+        return UpgradeCost;
     }
 
-    public void setUpgradeLeCost(int upgradeLeCost) {
-        UpgradeLeCost = upgradeLeCost;
+    public void setUpgradeCost(int upgradeCost) {
+        UpgradeCost = upgradeCost;
     }
 
     public String getName() {

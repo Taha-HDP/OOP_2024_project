@@ -9,16 +9,21 @@ public class ShopMenu {
         System.out.println("entered profile menu");
         System.out.println("1- all cards");
         System.out.println("2- upgradable cards");
+        label:
         while (true) {
             String input = scanner.nextLine();
-            if(input.equals("1")){
-                buyCard(scanner);
-            }else if(input.equals("2")){
-                upgradeCard(scanner);
-            }else if(input.equals("back")){
-                break ;
-            }else{
-                System.out.println("invalid command");
+            switch (input) {
+                case "1":
+                    buyCard(scanner);
+                    break;
+                case "2":
+                    upgradeCard(scanner);
+                    break;
+                case "back":
+                    break label;
+                default:
+                    System.out.println("invalid command");
+                    break;
             }
         }
     }
@@ -26,7 +31,7 @@ public class ShopMenu {
         CardController CC = new CardController() ;
         User myUser = User.getLoggedInUser() ;
         ArrayList<Card> visibleCard = new ArrayList<>() ;
-        boolean check = true ;
+        boolean check ;
         int i=1 ;
         for(Card card : CC.getCards()){
             check = true ;
@@ -37,7 +42,7 @@ public class ShopMenu {
                 }
             }
             if(check) {
-                System.out.println(i +  "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeLeCost() + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
+                System.out.println(i +  "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost() + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
                 i++;
                 visibleCard.add(card) ;
             }
@@ -49,15 +54,15 @@ public class ShopMenu {
             }
             if(!input.matches("\\d+")){
                 System.out.println("invalid input");
-            }else if(Integer.valueOf(input)<1 || Integer.valueOf(input)>visibleCard.size()){
+            }else if(Integer.parseInt(input)<1 || Integer.parseInt(input)>visibleCard.size()){
                 System.out.println("invalid input");
             }else{
-                int cardNumber = Integer.valueOf(input)-1 ;
+                int cardNumber = Integer.parseInt(input)-1 ;
                 Card mainCard = visibleCard.get(cardNumber) ;
-                if(myUser.hasCard(mainCard)){
+                if(myUser.getCard(mainCard)!=null){
                     System.out.println("you already have this card !");
-                }else if(myUser.getGold()>=mainCard.getUpgradeLeCost()){
-                    myUser.setGold(User.getLoggedInUser().getGold()-mainCard.getUpgradeLeCost());
+                }else if(myUser.getGold()>=mainCard.getUpgradeCost()){
+                    myUser.setGold(User.getLoggedInUser().getGold()-mainCard.getUpgradeCost());
                     myUser.addCards(mainCard);
                     System.out.println("successfully added");
                 }else{
@@ -68,11 +73,10 @@ public class ShopMenu {
         }
     }
     private static void upgradeCard(Scanner scanner){
-        CardController CC = new CardController() ;
         User myUser = User.getLoggedInUser() ;
         int i=1 ;
         for(Card card : myUser.getCards()){
-            System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeLeCost()*1.25*(card.getLevel()+1) + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration() + " | level for upgrade: " + card.getUpgradeLevel());
+            System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost()*1.25*(card.getLevel()+1) + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration() + " | level for upgrade: " + card.getUpgradeLevel());
             i++;
         }
         while (true){
@@ -82,17 +86,17 @@ public class ShopMenu {
             }
             if(!input.matches("\\d+")){
                 System.out.println("invalid input");
-            }else if(Integer.valueOf(input)<1 || Integer.valueOf(input)>myUser.getCards().size()){
+            }else if(Integer.parseInt(input)<1 || Integer.parseInt(input)>myUser.getCards().size()){
                 System.out.println("invalid input");
             }else{
-                int cardNumber = Integer.valueOf(input)-1 ;
+                int cardNumber = Integer.parseInt(input)-1 ;
                 Card mainCard = myUser.getCards().get(cardNumber) ;
                 if(myUser.getLevel()<mainCard.getUpgradeLevel()){
                     System.out.println("you need to level up to level: " + mainCard.getUpgradeLevel() + "then you can upgrade your card");
-                }else if(myUser.getGold()>= mainCard.getUpgradeLeCost()*1.25*(mainCard.getLevel()+1)){
-                    myUser.setGold( (int) ( User.getLoggedInUser().getGold()- (mainCard.getUpgradeLeCost()*1.25*(mainCard.getLevel()+1)) ) );
-                    myUser.addCards(mainCard);
-                    System.out.println("successfully added");
+                }else if(myUser.getGold()>= mainCard.getUpgradeCost()*1.25*(mainCard.getLevel()+1)){
+                    myUser.setGold( (int) ( User.getLoggedInUser().getGold()- (mainCard.getUpgradeCost()*1.25*(mainCard.getLevel()+1)) ) );
+                    myUser.getCard(mainCard).setLevel(myUser.getCard(mainCard).getLevel()+1);
+                    System.out.println("successfully upgraded");
                 }else{
                     System.out.println("you dont have enough gold");
                 }

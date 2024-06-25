@@ -47,11 +47,11 @@ public class AdminMenu {
     static void addCard(Matcher matcher){
         matcher.find();
         String name = matcher.group("name") ;
-        int HP = Integer.valueOf(matcher.group("power")) ;
-        int duration = Integer.valueOf(matcher.group("duration")) ;
-        int playerDamage = Integer.valueOf(matcher.group("playerDamage")) ;
-        int upgradeLevel = Integer.valueOf(matcher.group("upgradeLevel")) ;
-        int upgradeLeCost = Integer.valueOf(matcher.group("UpgradeCost")) ;
+        int HP = Integer.parseInt(matcher.group("power")) ;
+        int duration = Integer.parseInt(matcher.group("duration")) ;
+        int playerDamage = Integer.parseInt(matcher.group("playerDamage")) ;
+        int upgradeLevel = Integer.parseInt(matcher.group("upgradeLevel")) ;
+        int upgradeLeCost = Integer.parseInt(matcher.group("UpgradeCost")) ;
         CardController CC = new CardController();
         if (CC.getCardByName(name) != null) {
             System.out.println("this name is used for another card !");
@@ -78,7 +78,7 @@ public class AdminMenu {
         for(int i=0 ; i<cards.size() ; i++){
             System.out.println((i+1) +  "- " + cards.get(i).getName());
         }
-        int cardNumber=0 ;
+        int cardNumber ;
         while(true){
             String input = scanner.nextLine();
             if(input.equals("back")){
@@ -89,7 +89,7 @@ public class AdminMenu {
                 System.out.println("invalid input");
                 continue;
             }
-            cardNumber = Integer.valueOf(input) ;
+            cardNumber = Integer.parseInt(input) ;
             if (cardNumber > cards.size() || cardNumber < 1) {
                 System.out.println("invalid number , try again");
             }else{
@@ -102,7 +102,7 @@ public class AdminMenu {
         int duration = mainCard.getDamage();
         int playerDamage = mainCard.getDuration();
         int upgradeLevel = mainCard.getUpgradeLevel();
-        int upgradeLeCost = mainCard.getUpgradeLeCost();
+        int upgradeLeCost = mainCard.getUpgradeCost();
         System.out.println("1- name : " + name);
         System.out.println("2- HP : " + HP);
         System.out.println("3- Damage : " + duration);
@@ -110,7 +110,7 @@ public class AdminMenu {
         System.out.println("5- Upgrade Level : " + upgradeLevel);
         System.out.println("6- Upgrade Cost : " + upgradeLeCost);
         System.out.println("7- done");
-        int partNumber=0 ;
+        int partNumber;
         while(true){
             String input = scanner.nextLine();
             if(input.equals("back")){
@@ -121,7 +121,7 @@ public class AdminMenu {
                 System.out.println("invalid input");
                 continue;
             }
-            partNumber = Integer.valueOf(input) ;
+            partNumber = Integer.parseInt(input) ;
             if (partNumber > 7 || partNumber < 1) {
                 System.out.println("invalid number , try again");
             }else{
@@ -154,10 +154,10 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            if(Integer.valueOf(input)<10 || Integer.valueOf(input)>100){
+                            if(Integer.parseInt(input)<10 || Integer.parseInt(input)>100){
                                 System.out.println("invalid value for HP");
                             }else{
-                                HP = (Integer.valueOf(input)) ;
+                                HP = (Integer.parseInt(input)) ;
                                 System.out.println("accepted");
                                 break;
                             }
@@ -174,10 +174,10 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            if(Integer.valueOf(input)<10 || Integer.valueOf(input)>50){
+                            if(Integer.parseInt(input)<10 || Integer.parseInt(input)>50){
                                 System.out.println("invalid value for player damage");
                             }else{
-                                playerDamage = Integer.valueOf(input) ;
+                                playerDamage = Integer.parseInt(input) ;
                                 System.out.println("accepted");
                                 break;
                             }
@@ -194,10 +194,10 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            if(Integer.valueOf(input)<1 || Integer.valueOf(input)>5){
+                            if(Integer.parseInt(input)<1 || Integer.parseInt(input)>5){
                                 System.out.println("invalid value for duration");
                             }else{
-                                duration = Integer.valueOf(input) ;
+                                duration = Integer.parseInt(input) ;
                                 System.out.println("accepted");
                                 break;
                             }
@@ -214,7 +214,7 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            upgradeLevel = Integer.valueOf(input) ;
+                            upgradeLevel = Integer.parseInt(input) ;
                             System.out.println("accepted");
                             break;
                         }
@@ -231,7 +231,7 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            upgradeLeCost = Integer.valueOf(input) ;
+                            upgradeLeCost = Integer.parseInt(input) ;
                             System.out.println("accepted");
                             break;
                         }
@@ -245,7 +245,7 @@ public class AdminMenu {
                             mainCard.setDamage(playerDamage);
                             mainCard.setDuration(duration);
                             mainCard.setUpgradeLevel(upgradeLevel);
-                            mainCard.setUpgradeLeCost(upgradeLeCost);
+                            mainCard.setUpgradeCost(upgradeLeCost);
                             System.out.println("successfully edited !");
                         }
                         run(scanner);
@@ -261,7 +261,7 @@ public class AdminMenu {
         for(int i=0 ; i<cards.size() ; i++){
             System.out.println((i+1) +  "- " + cards.get(i).getName());
         }
-        int cardNumber=0 ;
+        int cardNumber ;
         while(true){
             String input = scanner.nextLine();
             if(input.equals("back")){
@@ -272,7 +272,7 @@ public class AdminMenu {
                 System.out.println("invalid input");
                 continue;
             }
-            cardNumber = Integer.valueOf(input) ;
+            cardNumber = Integer.parseInt(input) ;
             if (cardNumber > cards.size() || cardNumber < 1) {
                 System.out.println("invalid number , try again");
             }else{
@@ -287,6 +287,5 @@ public class AdminMenu {
             System.out.println("successfully removed");
         }
         run(scanner) ;
-        return;
     }
 }

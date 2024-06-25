@@ -1,10 +1,7 @@
 package View;
-import Controller.UserController;
 import Model.Card;
 import Model.User;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MainMenu {
     public static void run(Scanner scanner) {
@@ -13,7 +10,6 @@ public class MainMenu {
             starterPack(User.getLoggedInUser());
             User.getLoggedInUser().setFirstLogin(false);
         }
-        UserController UC = new UserController();
         while (true) {
             System.out.println("1- start game");
             System.out.println("2- cards");
@@ -31,7 +27,7 @@ public class MainMenu {
                     System.out.print("type: " + card.getType() +  " | name: " + card.getName()  + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
                 }
             }else if (input.equals("3")) {
-                //game history
+                gameHistory() ;
             }else if (input.equals("4")) {
                 ShopMenu.run(scanner) ;
             }else if (input.equals("5")) {
@@ -52,11 +48,10 @@ public class MainMenu {
                 System.out.println("invalid command");
         }
     }
-    private static Matcher getCommandMatcher(String input, String regex) {
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(input);
-    }
     private static void starterPack(User user){
         // 20 kart dade shavad ;
+    }
+    private static void gameHistory(){
+
     }
 }
