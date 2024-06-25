@@ -74,3 +74,30 @@ nickname : HDP
 xp : 0
 level : 1
 gold : 1000
+admin logged in successfully !
+entered Admin menu
+invalid value for HP
+invalid value for duration
+invalid value for player damage
+successfully added
+this name is used for another card !
+successfully added
+1- cardName
+2- cardName2
+are you sure  you want to delete this card ?(y/n)
+successfully removed
+entered Admin menu
+1- cardName2
+1- name : cardName2
+2- HP : 50
+3- Damage : 20
+4- Duration : 2
+5- Upgrade Level : 5
+6- Upgrade Cost : 50
+7- done
+accepted
+invalid value for player damage
+are you sure you want to edit this card?(y/n)
+successfully edited !
+entered Admin menu
+ali | 1 | 1000

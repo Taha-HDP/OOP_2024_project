@@ -149,7 +149,7 @@ public class UserController {
         }
         return user;
     }
-    User getByUsername(String username){
+    public User getByUsername(String username){
         for(User user : users){
             if(user.getUsername().equals(username)){
                 return user ;

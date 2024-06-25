@@ -13,6 +13,11 @@ import java.util.regex.Pattern;
 public class AdminMenu {
     public static void run(Scanner scanner) {
         System.out.println("entered Admin menu");
+        System.out.println("1- add card -n (cardName) -p (HP 10-100) -d (duration 1-5) -pd (damage 10-50) -ul (upgradeLevel) -uc (upgradeCost)");
+        System.out.println("2- edit card");
+        System.out.println("3- remove card");
+        System.out.println("4- all users");
+        System.out.println("5- logout");
         while (true){
             String input = scanner.nextLine();
             if(input.matches(Regexes.addCard.pattern)){
@@ -28,6 +33,8 @@ public class AdminMenu {
                 }
             }else if (input.equals("exit"))
                 System.exit(0);
+            else if (input.equals("back"))
+                break ;
             else{
                 System.out.println("invalid command");
             }

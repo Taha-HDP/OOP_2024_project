@@ -17,7 +17,14 @@ public class User {
         this.Color = color ;
         this.Pet = pet ;
     }
-
+    public boolean hasCard(Card card){
+        for(Card target : this.cards){
+            if(card.equals(target)){
+                return true ;
+            }
+        }
+        return false ;
+    }
     public ArrayList<Card> getCards() {
         return cards;
     }

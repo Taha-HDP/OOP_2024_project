@@ -11,6 +11,11 @@ public class ProfileMenu {
 
     public static void run(Scanner scanner){
         System.out.println("entered profile menu");
+        System.out.println("1- Show information");
+        System.out.println("2- Profile change -u (username)");
+        System.out.println("3- Profile change -n (nickname)");
+        System.out.println("4- Profile change password -o (oldPass) -n (newPass)");
+        System.out.println("5- Profile change -e (email)");
         while (true) {
             String input = scanner.nextLine();
             //show info
