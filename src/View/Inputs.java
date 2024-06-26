@@ -38,12 +38,18 @@ public class Inputs {
                     answers.add(ans2) ;
                     answers.add(ans3) ;
                     System.out.println("all question answered");
-                    return answers;
+                    break ;
                 }
             }else{
                 System.out.println("invalid input");
             }
         }
+        while (true){
+            if(Captcha.ask()){
+                break;
+            }
+        }
+        return answers ;
     }
     private static Matcher getCommandMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);

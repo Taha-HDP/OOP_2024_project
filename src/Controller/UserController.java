@@ -47,12 +47,12 @@ public class UserController {
             return;
         }
         String FatherName , Color , Pet ;
-        output.UserCreated();
         ArrayList<String> answers = input.askQE();
         FatherName = answers.get(0);
         Color = answers.get(1);
         Pet = answers.get(2);
         users.add(new User(Username , Password , Nickname , Email , FatherName , Color , Pet)) ;
+        output.UserCreated();
     }
     public User login(String Username , String Password){
         User user = getByUsername(Username) ;

@@ -36,6 +36,7 @@ public class MainMenu {
                 ProfileMenu.run(scanner) ;
             }else if (input.equals("6")) {
                 User.setLoggedInUser(null);
+                System.out.println("logged out successfully");
                 LoginMenu LM = new LoginMenu();
                 LM.run(scanner);
             }
