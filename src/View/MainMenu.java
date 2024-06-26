@@ -1,6 +1,8 @@
 package View;
 import Model.Card;
 import Model.User;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -49,7 +51,9 @@ public class MainMenu {
         }
     }
     private static void starterPack(User user){
-        // 20 kart dade shavad ;
+        for(int i=0 ; i<20 ; i++){
+            //user.addCards(random card);
+        }
     }
     private static void gameHistory(){
 
