@@ -1,8 +1,11 @@
 package View;
 
 import Controller.UserController;
+import Model.Card;
 import Model.User;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,10 +13,13 @@ import java.util.regex.Pattern;
 public class GameMenu {
     private static User user2;
     private static final User user1 = User.getLoggedInUser();
+    private static int map1[]= new int[21] ;
+    private static int map2[] = new int[21] ;
     private static int charNumber1=0 , charNumber2=0 ;
     private static int loginAttempt = 0 , betPrice=0;
     private static long startTime = 0;
-
+    private static ArrayList<Card> randomCard1 = new ArrayList<>() ;
+    private static ArrayList<Card> randomCard2 = new ArrayList<>() ;
     public static void run(Scanner scanner) {
         System.out.println("entered game menu");
         while (true) {
@@ -133,7 +139,7 @@ public class GameMenu {
                         if(charNumber1==0 || charNumber2==0){
                             System.out.println("both need to select character");
                         }else{
-                            Game(scanner) ;
+                            printData(scanner) ;
                         }
                     }else if(matcher.group("user").equals("user1")){
                         charNumber1 = Integer.parseInt(matcher.group("characterNumber")) ;
@@ -151,8 +157,56 @@ public class GameMenu {
             }
         }
     }
-    public static void Game(Scanner scanner){
-
+    public static void printData(Scanner scanner){
+        user1.setHP(100);
+        user2.setHP(100);
+        int round1=4 , round2=4 ;
+        //------------------------------ show map
+        printMap(map1) ;
+        printMap(map2) ;
+        //------------------------------ show HP
+        System.out.println("User 1 rounds : " + user1.getHP());
+        System.out.println("User 2 rounds : " + user2.getHP());
+        //------------------------------ show Rounds
+        System.out.println("User 1 HP : " + round1);
+        System.out.println("User 2 HP : " + round2);
+        //------------------------------ show character
+        System.out.println("User 1 character : " + charNumber1);
+        System.out.println("User 2 character : " + charNumber2);
+        //------------------------------ show cards
+        showRandomCard(user1) ;
+        showRandomCard(user2) ;
+    }
+    public static void printMap(int[] numbers){
+        Random random = new Random();
+        for (int i = 0; i < 21; i++) {
+            numbers[i] = i + 1;
+        }
+        numbers[random.nextInt(21)] = 0;
+        for (int number : numbers) {
+            if(number==0)
+                System.out.println("X ");
+            else
+                System.out.print(number + " ");
+        }
+    }
+    public static void showRandomCard(User user){
+        Random random = new Random();
+        for(int i=0 ; i<5 ; i++){
+            int x = random.nextInt(user.getCards().size()) ;
+            if(user.getFromRandomCard(user.getCardByNumber(x))!=null){
+                i-- ;
+            }else {
+                Card card = user.getCardByNumber(x) ;
+                user.randomCards.add(card);
+                System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost() + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
+            }
+        }
+    }
+    private void generateRandomCard(User user){
+        Random random = new Random();
+        int x = random.nextInt(user.getCards().size()) ;
+        user.randomCards.add(user.getCardByNumber(x)) ;
     }
 
 }

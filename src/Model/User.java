@@ -7,8 +7,9 @@ public class User {
     private final String FathersName, Color, Pet;
     private static User loggedInUser = null;
     private boolean firstLogin = true;
-    private int Level = 1, XP = 0, Gold = 1000;
+    private int Level = 1, XP = 0, Gold = 1000, HP = 100;
     private final ArrayList<Card> cards = new ArrayList<>();
+    public ArrayList<Card> randomCards = new ArrayList<>();
 
     public User(String username, String password, String nickname, String email, String fathersName, String color, String pet) {
         this.Username = username;
@@ -18,6 +19,24 @@ public class User {
         this.FathersName = fathersName;
         this.Color = color;
         this.Pet = pet;
+    }
+    public Card getCardByNumber(int number){
+        return cards.get(number) ;
+    }
+    public Card getFromRandomCard(Card card){
+        for(Card target : randomCards){
+            if(target.equals(card)){
+                return target ;
+            }
+        }
+        return null ;
+    }
+    public int getHP() {
+        return HP;
+    }
+
+    public void setHP(int HP) {
+        this.HP = HP;
     }
 
     public Card getCard(Card card) {
