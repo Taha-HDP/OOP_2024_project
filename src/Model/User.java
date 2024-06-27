@@ -10,6 +10,7 @@ public class User {
     private int Level = 1, XP = 0, Gold = 1000, HP = 100;
     private final ArrayList<Card> cards = new ArrayList<>();
     public ArrayList<Card> randomCards = new ArrayList<>();
+    ArrayList<Game> games = new ArrayList<>() ;
 
     public User(String username, String password, String nickname, String email, String fathersName, String color, String pet) {
         this.Username = username;
@@ -22,6 +23,17 @@ public class User {
     }
     public Card getCardByNumber(int number){
         return cards.get(number) ;
+    }
+
+    public ArrayList<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(ArrayList<Game> games) {
+        this.games = games;
+    }
+    public void addGames(Game game){
+        games.add(game) ;
     }
     public Card getFromRandomCard(Card card){
         for(Card target : randomCards){

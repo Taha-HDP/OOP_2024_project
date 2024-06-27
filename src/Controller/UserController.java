@@ -54,6 +54,7 @@ public class UserController {
         Color = answers.get(1);
         Pet = answers.get(2);
         users.add(new User(Username, Password, Nickname, Email, FatherName, Color, Pet));
+
         output.UserCreated();
     }
 
