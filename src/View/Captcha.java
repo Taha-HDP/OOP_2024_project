@@ -16,6 +16,7 @@ public class Captcha {
             {"  ___  ", " ( _ ) ", " / _ \\ ", "| (_) |", " \\___/ ", "       "},
             {"  ___  ", " / _ \\ ", "| (_) |", " \\__, |", "   /_/ ", "       "}
     };
+
     public static boolean ask() {
         Random rand = new Random();
         Scanner scanner = new Scanner(System.in);
@@ -40,12 +41,13 @@ public class Captcha {
         String userInput = scanner.nextLine();
         if (userInput.equals(plainCaptcha.toString())) {
             System.out.println("Accepted");
-            return true ;
+            return true;
         } else {
             System.out.println("Captcha does not match. Please try again.");
-            return false ;
+            return false;
         }
     }
+
     private static void addNoise(StringBuilder[] captchaLines) {
         Random rand = new Random();
         for (StringBuilder line : captchaLines) {

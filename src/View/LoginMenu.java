@@ -1,13 +1,17 @@
 package View;
+
 import Controller.UserController;
 import Model.User;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class LoginMenu {
     UserController UC = new UserController();
-    int loginAttempt = 0 ;
-    long elapsedTime=0 , startTime =0;
+    int loginAttempt = 0;
+    long elapsedTime = 0, startTime = 0;
+
     public void run(Scanner scanner) {
         System.out.println("entered login menu");
         while (true) {
@@ -35,65 +39,70 @@ public class LoginMenu {
             //show menu name
             else if (input.matches(Regexes.showMenuName.pattern))
                 System.out.println("login menu");
-            //exit
+                //exit
             else if (input.equals("exit"))
                 System.exit(0);
-            //invalid command
+                //invalid command
             else
                 System.out.println("invalid command");
         }
     }
+
     private static Matcher getCommandMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
+
     private void userRegister(Matcher matcher) {
         matcher.find();
-        String username = matcher.group("username") ;
-        String password = matcher.group("password") ;
-        String passConfirm = matcher.group("passConfirm") ;
-        String email = matcher.group("email") ;
-        String nickName = matcher.group("nickName") ;
-        UC.CreateUser(username,password,passConfirm, email ,nickName) ;
+        String username = matcher.group("username");
+        String password = matcher.group("password");
+        String passConfirm = matcher.group("passConfirm");
+        String email = matcher.group("email");
+        String nickName = matcher.group("nickName");
+        UC.CreateUser(username, password, passConfirm, email, nickName);
     }
+
     private void userLogin(Matcher matcher, Scanner scanner) {
         matcher.find();
-        if(startTime!=0){
-            elapsedTime = System.currentTimeMillis()/1000 - startTime ;
-            if(elapsedTime>=(5L *loginAttempt)){
-                startTime =0 ;
-                elapsedTime=0 ;
-            }else{
-                System.out.println("try again in ("+ ((5L *loginAttempt)-elapsedTime) + ") seconds");
+        if (startTime != 0) {
+            elapsedTime = System.currentTimeMillis() / 1000 - startTime;
+            if (elapsedTime >= (5L * loginAttempt)) {
+                startTime = 0;
+                elapsedTime = 0;
+            } else {
+                System.out.println("try again in (" + ((5L * loginAttempt) - elapsedTime) + ") seconds");
                 return;
             }
         }
-        String username = matcher.group("username") ;
-        String password = matcher.group("password") ;
-        User loggedInUser = UC.login(username,password) ;
-        if(loggedInUser!=null){
+        String username = matcher.group("username");
+        String password = matcher.group("password");
+        User loggedInUser = UC.login(username, password);
+        if (loggedInUser != null) {
             System.out.println("logged in successfully !");
-            loginAttempt=0 ;
+            loginAttempt = 0;
             startTime = 0;
             MainMenu.run(scanner);
-        }else{
-            loginAttempt++ ;
-            startTime = System.currentTimeMillis()/1000 ;
-            elapsedTime = System.currentTimeMillis()/1000 - startTime ;
-            System.out.println("try again in ("+ ((5L *loginAttempt)-elapsedTime) + ") seconds");
+        } else {
+            loginAttempt++;
+            startTime = System.currentTimeMillis() / 1000;
+            elapsedTime = System.currentTimeMillis() / 1000 - startTime;
+            System.out.println("try again in (" + ((5L * loginAttempt) - elapsedTime) + ") seconds");
         }
     }
+
     private void adminLogin(Matcher matcher, Scanner scanner) {
         matcher.find();
-        String password = matcher.group("password") ;
-        if(password.equals("AdminPassword")){
+        String password = matcher.group("password");
+        if (password.equals("AdminPassword")) {
             System.out.println("admin logged in successfully !");
             AdminMenu.run(scanner);
         }
     }
+
     private void forgetPass(Matcher matcher) {
         matcher.find();
-        String username = matcher.group("username") ;
+        String username = matcher.group("username");
         UC.forgetPass(username);
     }
 }

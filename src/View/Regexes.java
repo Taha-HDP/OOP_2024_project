@@ -12,7 +12,8 @@ public enum Regexes {
     changeNickname("Profile change -n (?<nickname>[a-zA-Z0-9]+)"),
     changePassword("Profile change password -o (?<oldPass>(.+)) -n (?<newPass>(.+))"),
     changeEmail("Profile change -e (?<email>(.+))"),
-    addCard("add card -n (?<name>[a-zA-Z0-9]+) -p (?<power>[\\d]+) -d (?<duration>[\\d]+) -pd (?<playerDamage>[\\d]+) -ul (?<upgradeLevel>[\\d]+) -uc (?<UpgradeCost>[\\d]+)");
+    selectCharacter("-select character (?<user>[a-zA-Z0-9]) (?<characterNumber>[\\d]+)"),
+    addCard("add card -n (?<name>[a-zA-Z0-9]+) -p (?<power>[\\d]+) -d (?<duration>[\\d]+) -pd (?<playerDamage>[\\d]+) -ul (?<upgradeLevel>[\\d]+) -uc (?<UpgradeCost>[\\d]+) -t (?<typeNumber>[\\d]+)");
     public final String pattern;
 
     Regexes(String pattern) {

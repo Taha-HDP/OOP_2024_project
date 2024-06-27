@@ -13,91 +13,100 @@ import java.util.regex.Pattern;
 public class AdminMenu {
     public static void run(Scanner scanner) {
         System.out.println("entered Admin menu");
-        System.out.println("1- add card -n (cardName) -p (HP 10-100) -d (duration 1-5) -pd (damage 10-50) -ul (upgradeLevel) -uc (upgradeCost)");
-        System.out.println("2- edit card");
-        System.out.println("3- remove card");
-        System.out.println("4- all users");
-        System.out.println("5- logout");
-        while (true){
+        while (true) {
+            System.out.println("1- add card -n (cardName) -p (HP 10-100) -d (duration 1-5) -pd (damage 10-50) -ul (upgradeLevel) -uc (upgradeCost)");
+            System.out.println("2- edit card");
+            System.out.println("3- remove card");
+            System.out.println("4- all users");
+            System.out.println("5- logout");
             String input = scanner.nextLine();
-            if(input.matches(Regexes.addCard.pattern)){
+            if (input.matches(Regexes.addCard.pattern)) {
                 Matcher matcher = getCommandMatcher(input, Regexes.addCard.pattern);
                 addCard(matcher);
-            }else if(input.equals("remove card")){
+            } else if (input.equals("remove card")) {
                 removeCard(scanner);
-            }else if(input.equals("edit card")){
+            } else if (input.equals("edit card")) {
                 editCard(scanner);
-            }else if(input.equals("all users")){
-                for(User user : UserController.users){
+            } else if (input.equals("all users")) {
+                for (User user : UserController.users) {
                     System.out.println(user.getUsername() + " | " + user.getLevel() + " | " + user.getGold());
                 }
-            }else if (input.equals("exit"))
+            } else if (input.matches(Regexes.showMenuName.pattern))
+                System.out.println("login menu");
+            else if (input.equals("exit"))
                 System.exit(0);
             else if (input.equals("back"))
-                break ;
-            else{
+                break;
+            else {
                 System.out.println("invalid command");
             }
         }
     }
+
     private static Matcher getCommandMatcher(String input, String regex) {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(input);
     }
-    static void addCard(Matcher matcher){
+
+    static void addCard(Matcher matcher) {
         matcher.find();
-        String name = matcher.group("name") ;
-        int HP = Integer.parseInt(matcher.group("power")) ;
-        int duration = Integer.parseInt(matcher.group("duration")) ;
-        int playerDamage = Integer.parseInt(matcher.group("playerDamage")) ;
-        int upgradeLevel = Integer.parseInt(matcher.group("upgradeLevel")) ;
-        int upgradeLeCost = Integer.parseInt(matcher.group("UpgradeCost")) ;
+        String name = matcher.group("name");
+        int HP = Integer.parseInt(matcher.group("power"));
+        int duration = Integer.parseInt(matcher.group("duration"));
+        int playerDamage = Integer.parseInt(matcher.group("playerDamage"));
+        int upgradeLevel = Integer.parseInt(matcher.group("upgradeLevel"));
+        int upgradeLeCost = Integer.parseInt(matcher.group("UpgradeCost"));
+        int typeNumber = Integer.parseInt(matcher.group("typeNumber"));
         CardController CC = new CardController();
         if (CC.getCardByName(name) != null) {
             System.out.println("this name is used for another card !");
             return;
         }
-        if(HP<10 || HP>100){
+        if (HP < 10 || HP > 100) {
             System.out.println("invalid value for HP");
             return;
         }
-        if(duration<1 || duration>5){
+        if (duration < 1 || duration > 5) {
             System.out.println("invalid value for duration");
             return;
         }
-        if(playerDamage<10 || playerDamage>50){
+        if (playerDamage < 10 || playerDamage > 50) {
             System.out.println("invalid value for player damage");
             return;
         }
-        CC.addCard(new Card(name,HP,playerDamage,duration,upgradeLevel,upgradeLeCost));
+        if(typeNumber<1 || typeNumber>4){
+            System.out.println("type Number must be between 1 and 5");
+        }
+        CC.addCard(new Card(name, HP, playerDamage, duration, upgradeLevel, upgradeLeCost , typeNumber));
         System.out.println("successfully added");
     }
-    static void editCard(Scanner scanner){
+
+    static void editCard(Scanner scanner) {
         CardController CC = new CardController();
-        ArrayList<Card> cards = CC.getCards() ;
-        for(int i=0 ; i<cards.size() ; i++){
-            System.out.println((i+1) +  "- " + cards.get(i).getName());
+        ArrayList<Card> cards = CC.getCards();
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println((i + 1) + "- " + cards.get(i).getName());
         }
-        int cardNumber ;
-        while(true){
+        int cardNumber;
+        while (true) {
             String input = scanner.nextLine();
-            if(input.equals("back")){
-                run(scanner) ;
+            if (input.equals("back")) {
+                run(scanner);
                 return;
             }
-            if(!input.matches("\\d+")){
+            if (!input.matches("\\d+")) {
                 System.out.println("invalid input");
                 continue;
             }
-            cardNumber = Integer.parseInt(input) ;
+            cardNumber = Integer.parseInt(input);
             if (cardNumber > cards.size() || cardNumber < 1) {
                 System.out.println("invalid number , try again");
-            }else{
-                break ;
+            } else {
+                break;
             }
         }
-        Card mainCard = cards.get(cardNumber-1) ;
-        String name = mainCard.getName() ;
+        Card mainCard = cards.get(cardNumber - 1);
+        String name = mainCard.getName();
         int HP = mainCard.getHP();
         int duration = mainCard.getDamage();
         int playerDamage = mainCard.getDuration();
@@ -111,100 +120,100 @@ public class AdminMenu {
         System.out.println("6- Upgrade Cost : " + upgradeLeCost);
         System.out.println("7- done");
         int partNumber;
-        while(true){
+        while (true) {
             String input = scanner.nextLine();
-            if(input.equals("back")){
-                run(scanner) ;
+            if (input.equals("back")) {
+                run(scanner);
                 return;
             }
-            if(!input.matches("\\d+")){
+            if (!input.matches("\\d+")) {
                 System.out.println("invalid input");
                 continue;
             }
-            partNumber = Integer.parseInt(input) ;
+            partNumber = Integer.parseInt(input);
             if (partNumber > 7 || partNumber < 1) {
                 System.out.println("invalid number , try again");
-            }else{
-                switch (partNumber){
+            } else {
+                switch (partNumber) {
                     case 1:
-                        while(true){
+                        while (true) {
                             input = scanner.nextLine();
-                            if(input.equals("back")){
+                            if (input.equals("back")) {
                                 run(scanner);
                                 return;
                             }
-                            if(CC.getCardByName(input)==null){
-                                name = input ;
+                            if (CC.getCardByName(input) == null) {
+                                name = input;
                                 System.out.println("accepted");
                                 break;
-                            }else{
-                                if(!CC.getCardByName(input).equals(mainCard))
+                            } else {
+                                if (!CC.getCardByName(input).equals(mainCard))
                                     System.out.println("this name is already used !");
                             }
                         }
                         break;
                     case 2:
-                        while(true){
+                        while (true) {
                             input = scanner.nextLine();
-                            if(input.equals("back")){
+                            if (input.equals("back")) {
                                 run(scanner);
                                 return;
                             }
-                            if(!input.matches("\\d+")){
+                            if (!input.matches("\\d+")) {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            if(Integer.parseInt(input)<10 || Integer.parseInt(input)>100){
+                            if (Integer.parseInt(input) < 10 || Integer.parseInt(input) > 100) {
                                 System.out.println("invalid value for HP");
-                            }else{
-                                HP = (Integer.parseInt(input)) ;
+                            } else {
+                                HP = (Integer.parseInt(input));
                                 System.out.println("accepted");
                                 break;
                             }
                         }
                         break;
                     case 3:
-                        while(true){
+                        while (true) {
                             input = scanner.nextLine();
-                            if(input.equals("back")){
+                            if (input.equals("back")) {
                                 run(scanner);
                                 return;
                             }
-                            if(!input.matches("\\d+")){
+                            if (!input.matches("\\d+")) {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            if(Integer.parseInt(input)<10 || Integer.parseInt(input)>50){
+                            if (Integer.parseInt(input) < 10 || Integer.parseInt(input) > 50) {
                                 System.out.println("invalid value for player damage");
-                            }else{
-                                playerDamage = Integer.parseInt(input) ;
+                            } else {
+                                playerDamage = Integer.parseInt(input);
                                 System.out.println("accepted");
                                 break;
                             }
                         }
                         break;
                     case 4:
-                        while(true){
+                        while (true) {
                             input = scanner.nextLine();
-                            if(input.equals("back")){
+                            if (input.equals("back")) {
                                 run(scanner);
                                 return;
                             }
-                            if(!input.matches("\\d+")){
+                            if (!input.matches("\\d+")) {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            if(Integer.parseInt(input)<1 || Integer.parseInt(input)>5){
+                            if (Integer.parseInt(input) < 1 || Integer.parseInt(input) > 5) {
                                 System.out.println("invalid value for duration");
-                            }else{
-                                duration = Integer.parseInt(input) ;
+                            } else {
+                                duration = Integer.parseInt(input);
                                 System.out.println("accepted");
                                 break;
                             }
                         }
                         break;
                     case 5: {
-                        while (true){
+                        while (true) {
                             input = scanner.nextLine();
                             if (input.equals("back")) {
                                 run(scanner);
@@ -214,14 +223,14 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            upgradeLevel = Integer.parseInt(input) ;
+                            upgradeLevel = Integer.parseInt(input);
                             System.out.println("accepted");
                             break;
                         }
                         break;
                     }
                     case 6:
-                        while (true){
+                        while (true) {
                             input = scanner.nextLine();
                             if (input.equals("back")) {
                                 run(scanner);
@@ -231,15 +240,15 @@ public class AdminMenu {
                                 System.out.println("invalid input");
                                 continue;
                             }
-                            upgradeLeCost = Integer.parseInt(input) ;
+                            upgradeLeCost = Integer.parseInt(input);
                             System.out.println("accepted");
                             break;
                         }
                         break;
                     case 7:
                         System.out.println("are you sure you want to edit this card?(y/n)");
-                        String answer = scanner.nextLine() ;
-                        if(answer.equals("y")){
+                        String answer = scanner.nextLine();
+                        if (answer.equals("y")) {
                             mainCard.setName(name);
                             mainCard.setHP(HP);
                             mainCard.setDamage(playerDamage);
@@ -255,37 +264,38 @@ public class AdminMenu {
         }
 
     }
-    static void removeCard(Scanner scanner){
+
+    static void removeCard(Scanner scanner) {
         CardController CC = new CardController();
-        ArrayList<Card> cards = CC.getCards() ;
-        for(int i=0 ; i<cards.size() ; i++){
-            System.out.println((i+1) +  "- " + cards.get(i).getName());
+        ArrayList<Card> cards = CC.getCards();
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println((i + 1) + "- " + cards.get(i).getName());
         }
-        int cardNumber ;
-        while(true){
+        int cardNumber;
+        while (true) {
             String input = scanner.nextLine();
-            if(input.equals("back")){
-                run(scanner) ;
+            if (input.equals("back")) {
+                run(scanner);
                 return;
             }
-            if(!input.matches("\\d")){
+            if (!input.matches("\\d")) {
                 System.out.println("invalid input");
                 continue;
             }
-            cardNumber = Integer.parseInt(input) ;
+            cardNumber = Integer.parseInt(input);
             if (cardNumber > cards.size() || cardNumber < 1) {
                 System.out.println("invalid number , try again");
-            }else{
-                break ;
+            } else {
+                break;
             }
         }
         System.out.println("are you sure  you want to delete this card ?(y/n)");
-        String answer = scanner.nextLine() ;
-        if(answer.equals("y")){
-            Card mainCard = cards.get(cardNumber-1) ;
+        String answer = scanner.nextLine();
+        if (answer.equals("y")) {
+            Card mainCard = cards.get(cardNumber - 1);
             CC.removeCard(mainCard);
             System.out.println("successfully removed");
         }
-        run(scanner) ;
+        run(scanner);
     }
 }

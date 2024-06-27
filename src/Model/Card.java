@@ -1,16 +1,26 @@
 package Model;
 
 public class Card {
-    private String Name , Type;
-    private int HP , Damage , Duration , UpgradeLevel , UpgradeCost, level=1;
-    public Card(String name, int HP, int damage, int duration , int upgradeLevel , int upgradeCost) {
+    private String Name, Type;
+    private int HP, Damage, Duration, UpgradeLevel, UpgradeCost, level = 1, TypeNumber;
+
+    public Card(String name, int HP, int damage, int duration, int upgradeLevel, int upgradeCost, int typeNumber) {
         this.Name = name;
         this.HP = HP;
         this.Damage = damage;
         this.Duration = duration;
-        this.UpgradeLevel = upgradeLevel ;
+        this.UpgradeLevel = upgradeLevel;
         this.UpgradeCost = upgradeCost;
-        this.Type = "normal" ;
+        this.Type = "normal";
+        this.TypeNumber = typeNumber;
+    }
+
+    public int getTypeNumber() {
+        return TypeNumber;
+    }
+
+    public void setTypeNumber(int typeNumber) {
+        TypeNumber = typeNumber;
     }
 
     public int getLevel() {
