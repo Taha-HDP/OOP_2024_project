@@ -46,7 +46,7 @@ public class ShopMenu {
                 }
             }
             if (check) {
-                System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost() + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
+                System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost() + " | HP: " + card.getPower() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
                 i++;
                 visibleCard.add(card);
             }
@@ -81,7 +81,7 @@ public class ShopMenu {
         User myUser = User.getLoggedInUser();
         int i = 1;
         for (Card card : myUser.getCards()) {
-            System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost() * 1.25 * (card.getLevel() + 1) + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration() + " | level for upgrade: " + card.getUpgradeLevel());
+            System.out.println(i + "- type: " + card.getType() + " | name: " + card.getName() + " | cost: " + card.getUpgradeCost() * 1.25 * (card.getLevel() + 1) + " | HP: " + card.getPower() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration() + " | level for upgrade: " + card.getUpgradeLevel());
             i++;
         }
         while (true) {

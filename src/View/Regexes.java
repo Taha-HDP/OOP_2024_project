@@ -13,6 +13,8 @@ public enum Regexes {
     changePassword("Profile change password -o (?<oldPass>(.+)) -n (?<newPass>(.+))"),
     changeEmail("Profile change -e (?<email>(.+))"),
     selectCharacter("-select character (?<user>[a-zA-Z0-9]) (?<characterNumber>[\\d]+)"),
+    selectCard("-select card number (?<card>[\\d]+) player (?<user>[\\d]+)"),
+    placeCard("-placing card number (?<card>[\\d]+) in block (?<block>[\\d]+)"),
     addCard("add card -n (?<name>[a-zA-Z0-9]+) -p (?<power>[\\d]+) -d (?<duration>[\\d]+) -pd (?<playerDamage>[\\d]+) -ul (?<upgradeLevel>[\\d]+) -uc (?<UpgradeCost>[\\d]+) -t (?<typeNumber>[\\d]+)");
     public final String pattern;
 

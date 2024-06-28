@@ -26,7 +26,7 @@ public class MainMenu {
             } else if (input.equals("2")) {
                 User myUser = User.getLoggedInUser();
                 for (Card card : myUser.getCards()) {
-                    System.out.print("type: " + card.getType() + " | name: " + card.getName() + " | HP: " + card.getHP() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
+                    System.out.print("type: " + card.getType() + " | name: " + card.getName() + " | HP: " + card.getPower() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
                 }
             } else if (input.equals("3")) {
                 gameHistory();

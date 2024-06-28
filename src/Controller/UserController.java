@@ -210,8 +210,8 @@ public class UserController {
         return password.toString();
     }
 
-    public void changeXP(int value) {
-        int xp = User.getLoggedInUser().getXP();
+    public void changeXP(User user, int value) {
+        int xp = user.getXP();
         xp += value;
         int levelUp = (int) Math.pow(10, User.getLoggedInUser().getLevel());
         int level = 0;
@@ -219,7 +219,13 @@ public class UserController {
             xp -= levelUp;
             level++;
         }
-        User.getLoggedInUser().setXP(xp);
-        User.getLoggedInUser().setLevel(User.getLoggedInUser().getLevel() + level);
+        user.setXP(xp);
+        user.setLevel(user.getLevel() + level);
     }
+    public void changeGold(User user , int value){
+        int gold = user.getGold() ;
+        gold+=value ;
+        user.setGold(gold);
+    }
+
 }

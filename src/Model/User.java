@@ -24,9 +24,22 @@ public class User {
     public Card getCardByNumber(int number){
         return cards.get(number) ;
     }
+    public Card getRandomCardByNumber(int number){
+        return randomCards.get(number) ;
+    }
+    public ArrayList<Card> getRandomCards(){
+        return this.randomCards ;
+    }
+
+    public void setRandomCards(ArrayList<Card> randomCards) {
+        this.randomCards = randomCards;
+    }
 
     public ArrayList<Game> getGames() {
         return games;
+    }
+    public void removeFromRandomCard(Card card){
+        randomCards.remove(card) ;
     }
 
     public void setGames(ArrayList<Game> games) {
