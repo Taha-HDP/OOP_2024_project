@@ -1,6 +1,7 @@
 package View;
 
 import Controller.UserController;
+import Model.SQL_setup;
 import Model.User;
 
 import java.util.Scanner;
@@ -82,6 +83,7 @@ public class LoginMenu {
             System.out.println("logged in successfully !");
             loginAttempt = 0;
             startTime = 0;
+            UC.getData(loggedInUser) ;
             MainMenu.run(scanner);
         } else {
             loginAttempt++;

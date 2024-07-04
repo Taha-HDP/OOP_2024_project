@@ -228,4 +228,8 @@ public class UserController {
         user.setGold(gold);
     }
 
+    public void getData(User user){
+
+    }
+
 }
