@@ -1,8 +1,16 @@
 package View;
 
+import Controller.CardController;
 import Model.Card;
+import Model.Game;
+import Model.SQL;
 import Model.User;
 
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -29,7 +37,7 @@ public class MainMenu {
                     System.out.print("type: " + card.getType() + " | name: " + card.getName() + " | HP: " + card.getPower() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
                 }
             } else if (input.equals("3")) {
-                gameHistory();
+                gameHistory(User.getLoggedInUser());
             } else if (input.equals("4")) {
                 ShopMenu.run(scanner);
             } else if (input.equals("5")) {
@@ -53,12 +61,42 @@ public class MainMenu {
     }
 
     private static void starterPack(User user) {
+        Random random = new Random();
+        CardController CC = new CardController();
         for (int i = 0; i < 20; i++) {
-            //user.addCards(random card);
+            int x = random.nextInt(CC.getCards().size());
+            Card card = CC.getCardByNumber(x) ;
+            if (user.getCard(card) != null) {
+                i--;
+            } else {
+                user.addCards(card);
+                try {
+                    Class.forName("org.sqlite.JDBC");
+                    Connection c = SQL.c;
+                    Statement stmt = SQL.stmt;
+                    c.setAutoCommit(false);
+                    String addCard = "INSERT INTO " + user.getUsername() + " (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "VALUES ('" + card.getName() + "', 'normal', " + card.getPower() + " , " + card.getDamage() + " , " + card.getDuration() + " , " + card.getUpgradeLevel() + " , " + card.getUpgradeCost() + " , " + card.getLevel() + " , " + card.getTypeNumber() + " );";
+                    String editFL = "UPDATE User SET FL = false WHERE Username = '" + user.getUsername() + "'";
+                    stmt.executeUpdate(addCard);
+                    stmt.executeUpdate(editFL);
+                    c.commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    private static void gameHistory() {
-
+    private static void gameHistory(User user) {
+        for (Game game : Game.games) {
+            if (game.Player1.equals(user.getUsername()) || game.Player2.equals(user.getUsername())) {
+                System.out.println("player 1 : " + game.Player1);
+                System.out.println("player 2 : " + game.Player2);
+                System.out.println("winner : " + game.winner.getUsername());
+                System.out.println("date : " + game.Date);
+                System.out.println("XP reward : " + game.XPReward);
+                System.out.println("gold reward : " + game.goldReward);
+            }
+        }
     }
 }

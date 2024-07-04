@@ -1,10 +1,13 @@
 package Controller;
 
+import Model.SQL;
 import Model.User;
 import View.Inputs;
 import View.Outputs;
 
 import java.security.SecureRandom;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +57,19 @@ public class UserController {
         Color = answers.get(1);
         Pet = answers.get(2);
         users.add(new User(Username, Password, Nickname, Email, FatherName, Color, Pet));
-
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = SQL.c;
+            Statement stmt = SQL.stmt;
+            c.setAutoCommit(false);
+            String addUser = "INSERT INTO USER (Username,Password,Nickname,Email,FatherName,Color,Pet,XP,Level,Gold,FL) " + "VALUES ('" + Username + "', '" + Password + "', '" + Nickname + "' , '" + Email + "' , '" + FatherName + "' , '" + Color + "' , '" + Pet + "' , 0 , 1 , 1000 , true );";
+            stmt.executeUpdate(addUser);
+            String cardTable = "CREATE TABLE " + Username + "(CardName char(15) primary key," + "CardType char(50)," + "Power int," + "Damage int," + "Duration int," + "UpgradeLevel int," + "UpgradeCost int," + "Level int," + "TypeNumber int)";
+            stmt.executeUpdate(cardTable);
+            c.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         output.UserCreated();
     }
 
@@ -107,6 +122,19 @@ public class UserController {
         } else if (getByUsername(newUser) != null) {
             output.DuplicatedUsername();
         } else {
+            try {
+                Class.forName("org.sqlite.JDBC");
+                Connection c = SQL.c;
+                Statement stmt = SQL.stmt;
+                c.setAutoCommit(false);
+                String editUsername = "UPDATE User SET Username = '" + newUser + "' WHERE Username = '" + user.getUsername() + "'";
+                String editTable = "ALTER TABLE "+user.getUsername()+" RENAME TO '"+newUser+"'" ;
+                stmt.executeUpdate(editUsername);
+                stmt.executeUpdate(editTable) ;
+                c.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             user.setUsername(newUser);
             output.changedUsername();
         }
@@ -115,6 +143,17 @@ public class UserController {
 
     public User changeNickname(User user, String nickname) {
         user.setNickname(nickname);
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = SQL.c;
+            Statement stmt = SQL.stmt;
+            c.setAutoCommit(false);
+            String editNickname = "UPDATE User SET Nickname = '" + nickname + "' WHERE Username = '" + user.getUsername() + "'";
+            stmt.executeUpdate(editNickname);
+            c.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         output.changedNickname();
         return user;
     }
@@ -132,6 +171,17 @@ public class UserController {
                 String checkPass = input.getInput();
                 if (checkPass.equals(Pass)) {
                     user.setPassword(Pass);
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        Connection c = SQL.c;
+                        Statement stmt = SQL.stmt;
+                        c.setAutoCommit(false);
+                        String editPassword = "UPDATE User SET Password = '" + Pass + "' WHERE Username = '" + user.getUsername() + "'";
+                        stmt.executeUpdate(editPassword);
+                        c.commit();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     output.changedPass();
                     return user;
                 } else {
@@ -147,6 +197,17 @@ public class UserController {
             output.InvalidEmail();
         } else {
             user.setEmail(email);
+            try {
+                Class.forName("org.sqlite.JDBC");
+                Connection c = SQL.c;
+                Statement stmt = SQL.stmt;
+                c.setAutoCommit(false);
+                String editEmail = "UPDATE User SET Email = '" + email + "' WHERE Username = '" + user.getUsername() + "'";
+                stmt.executeUpdate(editEmail);
+                c.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             output.changedEmail();
         }
         return user;
@@ -220,16 +281,41 @@ public class UserController {
             level++;
         }
         user.setXP(xp);
-        user.setLevel(user.getLevel() + level);
+        level += user.getLevel();
+        user.setLevel(level);
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = SQL.c;
+            Statement stmt = SQL.stmt;
+            c.setAutoCommit(false);
+            String editXP = "UPDATE User SET XP = '" + xp + "' WHERE Username = '" + user.getUsername() + "'";
+            String editLevel = "UPDATE User SET Level = '" + level + "' WHERE Username = '" + user.getUsername() + "'";
+            stmt.executeUpdate(editXP);
+            stmt.executeUpdate(editLevel);
+            c.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    public void changeGold(User user , int value){
-        int gold = user.getGold() ;
-        gold+=value ;
+
+    public void changeGold(User user, int value) {
+        int gold = user.getGold();
+        gold += value;
         user.setGold(gold);
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = SQL.c;
+            Statement stmt = SQL.stmt;
+            c.setAutoCommit(false);
+            String editGold = "UPDATE User SET Gold = '" + gold + "' WHERE username = '" + user.getUsername() + "'";
+            stmt.executeUpdate(editGold);
+            c.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void getData(User user){
-
+    public void setUsers(ArrayList<User> all) {
+        users = all;
     }
-
 }

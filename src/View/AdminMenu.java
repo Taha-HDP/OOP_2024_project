@@ -3,8 +3,11 @@ package View;
 import Controller.CardController;
 import Controller.UserController;
 import Model.Card;
+import Model.SQL;
 import Model.User;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -77,7 +80,7 @@ public class AdminMenu {
         if (typeNumber < 1 || typeNumber > 4) {
             System.out.println("type Number must be between 1 and 5");
         }
-        CC.addCard(new Card(name, power, playerDamage, duration, upgradeLevel, upgradeLeCost, typeNumber));
+        CC.addCard(new Card(name,"normal" , power, playerDamage, duration, upgradeLevel, upgradeLeCost, typeNumber));
         System.out.println("successfully added");
     }
 
@@ -249,6 +252,27 @@ public class AdminMenu {
                         System.out.println("are you sure you want to edit this card?(y/n)");
                         String answer = scanner.nextLine();
                         if (answer.equals("y")) {
+                            try{
+                                Class.forName("org.sqlite.JDBC");
+                                Connection c = SQL.c;
+                                Statement stmt = SQL.stmt;
+                                c.setAutoCommit(false);
+                                String editName = "UPDATE CARD SET CardName = '"+ name+"' WHERE CardName = '" + mainCard.getName() + "'" ;
+                                String editPower = "UPDATE CARD SET Power = '"+ power+"' WHERE CardName = '" + mainCard.getName() + "'" ;
+                                String editDamage = "UPDATE CARD SET Damage = '"+ playerDamage+"' WHERE CardName = '" + mainCard.getName() + "'" ;
+                                String editDuration = "UPDATE CARD SET Duration = '"+ duration+"' WHERE CardName = '" + mainCard.getName() + "'" ;
+                                String editUpgradeLevel = "UPDATE CARD SET UpgradeLevel = '"+ upgradeLevel+"' WHERE CardName = '" + mainCard.getName() + "'" ;
+                                String editUpgradeCost = "UPDATE CARD SET UpgradeCost = '"+ upgradeLeCost+"' WHERE CardName = '" + mainCard.getName() + "'" ;
+                                stmt.executeUpdate(editName) ;
+                                stmt.executeUpdate(editPower) ;
+                                stmt.executeUpdate(editDamage) ;
+                                stmt.executeUpdate(editDuration) ;
+                                stmt.executeUpdate(editUpgradeLevel) ;
+                                stmt.executeUpdate(editUpgradeCost) ;
+                                c.commit();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                             mainCard.setName(name);
                             mainCard.setPower(power);
                             mainCard.setDamage(playerDamage);

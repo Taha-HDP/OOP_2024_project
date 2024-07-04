@@ -39,24 +39,33 @@ public class GameController {
         user.randomCards.add(user.getCardByNumber(x));
     }
 
-    public int[] placeCard(int[] map, Card card, int blockNumber, int characterNumber) {
-        for (int i = blockNumber - 1; i < blockNumber + card.getDuration(); i++) {
+    public int[] placeCard(int[] map, Card card, int blockNumber, int characterNumber , int n) {
+        for (int i = blockNumber - 1; i < blockNumber + card.getDuration()-1; i++) {
             map[i] = 0;
-            map1Detail[i][0] = card.getPower();
-            map1Detail[i][1] = card.getDamage() / card.getDuration();
-            //afzayesh damage baray character
-            if (card.getTypeNumber() == characterNumber) {
-                map1Detail[i][1] += 10;
+            if(n==1){
+                map1Detail[i][0] = card.getPower();
+                map1Detail[i][1] = card.getDamage() / card.getDuration();
+                //afzayesh damage baray character
+                if (card.getTypeNumber() == characterNumber) {
+                    map1Detail[i][1] += 10;
+                }
+            }else{
+                map2Detail[i][0] = card.getPower();
+                map2Detail[i][1] = card.getDamage() / card.getDuration();
+                //afzayesh damage baray character
+                if (card.getTypeNumber() == characterNumber) {
+                    map2Detail[i][1] += 10;
+                }
             }
-            if (map1Detail[i][1] > 0 && map2Detail[i][1] > map1Detail[i][1]) {
+            if (map1Detail[i][0] > 0 && map2Detail[i][0] > map1Detail[i][0]) {
                 map1Detail[i][1] = -1;
                 map1Detail[i][0] = -1;
-            } else if (map2Detail[i][1] == map1Detail[i][1] && map1Detail[i][1] > 0) {
+            } else if (map2Detail[i][0] == map1Detail[i][0] && map1Detail[i][0] > 0) {
                 map1Detail[i][1] = -1;
                 map1Detail[i][0] = -1;
                 map2Detail[i][1] = -1;
                 map2Detail[i][0] = -1;
-            } else if (map2Detail[i][1] > 0 && map2Detail[i][1] < map1Detail[i][1]) {
+            } else if (map2Detail[i][0] > 0 && map2Detail[i][0] < map1Detail[i][0]) {
                 map2Detail[i][1] = -1;
                 map2Detail[i][0] = -1;
             }
