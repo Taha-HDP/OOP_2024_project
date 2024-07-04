@@ -117,7 +117,7 @@ public class ShopMenu {
                     System.out.println("you need to level up to level: " + mainCard.getUpgradeLevel() + "then you can upgrade your card");
                 } else if (myUser.getGold() >= mainCard.getUpgradeCost() * 1.25 * (mainCard.getLevel() + 1)) {
                     int newLevel = myUser.getCard(mainCard).getLevel() + 1;
-                    int newGold = (int) (User.getLoggedInUser().getGold() - (mainCard.getUpgradeCost() * 1.25 * (mainCard.getLevel() + 1))) ;
+                    int newGold = (int) (User.getLoggedInUser().getGold() - (mainCard.getUpgradeCost() * 1.25 * (mainCard.getLevel() + 1)));
                     try {
                         Class.forName("org.sqlite.JDBC");
                         Connection c = SQL.c;

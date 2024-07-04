@@ -128,9 +128,9 @@ public class UserController {
                 Statement stmt = SQL.stmt;
                 c.setAutoCommit(false);
                 String editUsername = "UPDATE User SET Username = '" + newUser + "' WHERE Username = '" + user.getUsername() + "'";
-                String editTable = "ALTER TABLE "+user.getUsername()+" RENAME TO '"+newUser+"'" ;
+                String editTable = "ALTER TABLE " + user.getUsername() + " RENAME TO '" + newUser + "'";
                 stmt.executeUpdate(editUsername);
-                stmt.executeUpdate(editTable) ;
+                stmt.executeUpdate(editTable);
                 c.commit();
             } catch (Exception e) {
                 e.printStackTrace();

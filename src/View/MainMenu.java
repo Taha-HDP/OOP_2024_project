@@ -65,7 +65,7 @@ public class MainMenu {
         CardController CC = new CardController();
         for (int i = 0; i < 20; i++) {
             int x = random.nextInt(CC.getCards().size());
-            Card card = CC.getCardByNumber(x) ;
+            Card card = CC.getCardByNumber(x);
             if (user.getCard(card) != null) {
                 i--;
             } else {

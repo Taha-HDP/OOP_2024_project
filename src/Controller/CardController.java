@@ -35,9 +35,11 @@ public class CardController {
             e.printStackTrace();
         }
     }
-    public Card getCardByNumber(int x){
-        return cards.get(x) ;
+
+    public Card getCardByNumber(int x) {
+        return cards.get(x);
     }
+
     public ArrayList<Card> getCards() {
         return this.cards;
     }

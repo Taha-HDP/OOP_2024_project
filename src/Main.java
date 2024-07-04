@@ -18,17 +18,18 @@ public class Main {
         LoginMenu LM = new LoginMenu();
         SQL.setup();
         //firstData();
-        getData() ;
+        getData();
         LM.run(scanner);
     }
-    private static void getData(){
+
+    private static void getData() {
         //get all cards
         try {
             Class.forName("org.sqlite.JDBC");
             SQL.c.setAutoCommit(false);
             ResultSet rs = SQL.stmt.executeQuery("SELECT * FROM CARD;");
-            CardController CC = new CardController() ;
-            ArrayList<Card> card = new ArrayList<>() ;
+            CardController CC = new CardController();
+            ArrayList<Card> card = new ArrayList<>();
             while (rs.next()) {
                 String name = rs.getString("CardName");
                 String type = rs.getString("CardType");
@@ -38,10 +39,10 @@ public class Main {
                 int upgradeLevel = rs.getInt("UpgradeLevel");
                 int upgradeCost = rs.getInt("UpgradeCost");
                 int typeNumber = rs.getInt("TypeNumber");
-                card.add(new Card(name,type,power,damage,duration,upgradeLevel,upgradeCost,typeNumber)) ;
+                card.add(new Card(name, type, power, damage, duration, upgradeLevel, upgradeCost, typeNumber));
             }
             CC.setCards(card);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //get all users
@@ -49,8 +50,8 @@ public class Main {
             Class.forName("org.sqlite.JDBC");
             SQL.c.setAutoCommit(false);
             ResultSet rs = SQL.stmt.executeQuery("SELECT * FROM USER;");
-            UserController UC = new UserController() ;
-            ArrayList<User> user = new ArrayList<>() ;
+            UserController UC = new UserController();
+            ArrayList<User> user = new ArrayList<>();
             while (rs.next()) {
                 String name = rs.getString("Username");
                 String password = rs.getString("Password");
@@ -63,23 +64,23 @@ public class Main {
                 int XP = rs.getInt("XP");
                 int gold = rs.getInt("Gold");
                 boolean FL = rs.getBoolean("FL");
-                User target = new User(name,password,email,nickname,fatherName,color,pet) ;
+                User target = new User(name, password, email, nickname, fatherName, color, pet);
                 target.setGold(gold);
                 target.setLevel(level);
                 target.setXP(XP);
                 target.setFirstLogin(FL);
-                user.add(target) ;
+                user.add(target);
             }
             UC.setUsers(user);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        for(User user : UserController.users){
+        for (User user : UserController.users) {
             try {
                 Class.forName("org.sqlite.JDBC");
                 SQL.c.setAutoCommit(false);
-                ResultSet rs2 = SQL.stmt.executeQuery("SELECT * FROM "+user.getUsername()+";");
-                while (rs2.next()){
+                ResultSet rs2 = SQL.stmt.executeQuery("SELECT * FROM " + user.getUsername() + ";");
+                while (rs2.next()) {
                     String cardName = rs2.getString("CardName");
                     String type = rs2.getString("CardType");
                     int power = rs2.getInt("Power");
@@ -89,11 +90,11 @@ public class Main {
                     int upgradeCost = rs2.getInt("UpgradeCost");
                     int typeNumber = rs2.getInt("TypeNumber");
                     int cardLevel = rs2.getInt("Level");
-                    Card card = new Card(cardName,type,power,damage,duration,upgradeLevel,upgradeCost,typeNumber);
+                    Card card = new Card(cardName, type, power, damage, duration, upgradeLevel, upgradeCost, typeNumber);
                     card.setLevel(cardLevel);
                     user.addCards(card);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -102,7 +103,7 @@ public class Main {
             Class.forName("org.sqlite.JDBC");
             SQL.c.setAutoCommit(false);
             ResultSet rs = SQL.stmt.executeQuery("SELECT * FROM GAME;");
-            UserController UC = new UserController() ;
+            UserController UC = new UserController();
             while (rs.next()) {
                 String Player1 = rs.getString("Player1");
                 String Player2 = rs.getString("Player2");
@@ -110,79 +111,80 @@ public class Main {
                 int XP = rs.getInt("XP");
                 int Gold = rs.getInt("Gold");
                 String Winner = rs.getString("Winner");
-                Game.games.add(new Game(Player1 , Player2 , Date , UC.getByUsername(Winner)  , XP , Gold )) ;
+                Game.games.add(new Game(Player1, Player2, Date, UC.getByUsername(Winner), XP, Gold));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("ALL DATA RECEIVED ");
     }
-    static void firstData(){
+
+    static void firstData() {
         try {
             Class.forName("org.sqlite.JDBC");
             Connection c = SQL.c;
             Statement stmt = SQL.stmt;
             c.setAutoCommit(false);
-            String i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Mokhtari'   , 'Normal' , 40 , 24 , 2 , 4 , 400 , 1 , 1);" ;
+            String i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Mokhtari'   , 'Normal' , 40 , 24 , 2 , 4 , 400 , 1 , 1);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('DolatAbadi' , 'Normal' , 21 , 12 , 3 , 4 , 200 , 1 , 2);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('DolatAbadi' , 'Normal' , 21 , 12 , 3 , 4 , 200 , 1 , 2);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Kazem'      , 'Normal' , 40 , 30 , 2 , 4 , 500 , 1 , 3);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Kazem'      , 'Normal' , 40 , 30 , 2 , 4 , 500 , 1 , 3);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Makian'     , 'Normal' , 40 , 28 , 4 , 4 , 300 , 1 , 4);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Makian'     , 'Normal' , 40 , 28 , 4 , 4 , 300 , 1 , 4);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Kia'        , 'Normal' , 10 , 10 , 1 , 4 , 200 , 1 , 1);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Kia'        , 'Normal' , 10 , 10 , 1 , 4 , 200 , 1 , 1);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('DrStop'     , 'Normal' , 45 , 50 , 5 , 4 , 200 , 1 , 2);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('DrStop'     , 'Normal' , 45 , 50 , 5 , 4 , 200 , 1 , 2);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Hadi'       , 'Normal' , 30 , 24 , 3 , 4 , 300 , 1 , 3);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Hadi'       , 'Normal' , 30 , 24 , 3 , 4 , 300 , 1 , 3);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Sedei'      , 'Normal' , 48 , 40 , 4 , 4 , 400 , 1 , 4);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Sedei'      , 'Normal' , 48 , 40 , 4 , 4 , 400 , 1 , 4);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Mohandes'   , 'Normal' , 39 , 33 , 3 , 4 , 400 , 1 , 1);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Mohandes'   , 'Normal' , 39 , 33 , 3 , 4 , 400 , 1 , 1);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Doctor'     , 'Normal' , 32 , 40 , 4 , 4 , 200 , 1 , 2);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Doctor'     , 'Normal' , 32 , 40 , 4 , 4 , 200 , 1 , 2);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Barqi'      , 'Normal' , 36 , 30 , 3 , 4 , 300 , 1 , 3);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Barqi'      , 'Normal' , 36 , 30 , 3 , 4 , 300 , 1 , 3);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Compi'      , 'Normal' , 25 , 15 , 1 , 4 , 400 , 1 , 4);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Compi'      , 'Normal' , 25 , 15 , 1 , 4 , 400 , 1 , 4);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('MecHaqir'   , 'Normal' , 20 , 20 , 2 , 4 , 200 , 1 , 1);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('MecHaqir'   , 'Normal' , 20 , 20 , 2 , 4 , 200 , 1 , 1);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Sharifi'    , 'Normal' , 40 , 40 , 2 , 4 , 500 , 1 , 2);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Sharifi'    , 'Normal' , 40 , 40 , 2 , 4 , 500 , 1 , 2);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Mahdi'      , 'Normal' , 30 , 30 , 2 , 4 , 400 , 1 , 3);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Mahdi'      , 'Normal' , 30 , 30 , 2 , 4 , 400 , 1 , 3);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Taha'       , 'Normal' , 15 , 10 , 1 , 4 , 200 , 1 , 4);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Taha'       , 'Normal' , 15 , 10 , 1 , 4 , 200 , 1 , 4);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('TorkKhar'   , 'Normal' , 50 , 40 , 5 , 4 , 200 , 1 , 1);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('TorkKhar'   , 'Normal' , 50 , 40 , 5 , 4 , 200 , 1 , 1);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Shovalie'   , 'Normal' , 39 , 36 , 3 , 4 , 300 , 1 , 2);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Shovalie'   , 'Normal' , 39 , 36 , 3 , 4 , 300 , 1 , 2);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('asqarqasab' , 'Normal' , 40 , 32 , 4 , 4 , 300 , 1 , 3);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('asqarqasab' , 'Normal' , 40 , 32 , 4 , 4 , 300 , 1 , 3);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Single'     , 'Normal' , 20 , 15 , 1 , 4 , 300 , 1 , 4);" ;
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Single'     , 'Normal' , 20 , 15 , 1 , 4 , 300 , 1 , 4);";
             stmt.executeUpdate(i);
 
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Shield'     , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Shield'     , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Heal'       , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Heal'       , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('IncreasePow', 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('IncreasePow', 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('ChangeHole' , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('ChangeHole' , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Fixer'      , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Fixer'      , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Roand-1'    , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Roand-1'    , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Steal'      , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Steal'      , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Debilitation', 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Debilitation', 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Copy'       , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Copy'       , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
-            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) "+ "values('Hide'       , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
+            i = "insert into CARD (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "values('Hide'       , 'Spell' , Null , Null , Null , 4 , 300 , 1 , 0);";
             stmt.executeUpdate(i);
             c.commit();
         } catch (Exception e) {

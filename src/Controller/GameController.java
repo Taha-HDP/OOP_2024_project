@@ -6,10 +6,10 @@ import Model.User;
 import java.util.Random;
 
 public class GameController {
-    public static int map1[] = new int[21];
-    public static int map2[] = new int[21];
-    public static int map1Detail[][] = new int[21][2];
-    public static int map2Detail[][] = new int[21][2];
+    public static int[] map1 = new int[21];
+    public static int[] map2 = new int[21];
+    public static int[][] map1Detail = new int[21][2];
+    public static int[][] map2Detail = new int[21][2];
 
     public boolean placeable(int blockNumber, Card card, int[] map) {
         for (int i = blockNumber - 1; i < blockNumber + card.getDuration(); i++) {
@@ -39,17 +39,17 @@ public class GameController {
         user.randomCards.add(user.getCardByNumber(x));
     }
 
-    public int[] placeCard(int[] map, Card card, int blockNumber, int characterNumber , int n) {
-        for (int i = blockNumber - 1; i < blockNumber + card.getDuration()-1; i++) {
+    public int[] placeCard(int[] map, Card card, int blockNumber, int characterNumber, int n) {
+        for (int i = blockNumber - 1; i < blockNumber + card.getDuration() - 1; i++) {
             map[i] = 0;
-            if(n==1){
+            if (n == 1) {
                 map1Detail[i][0] = card.getPower();
                 map1Detail[i][1] = card.getDamage() / card.getDuration();
                 //afzayesh damage baray character
                 if (card.getTypeNumber() == characterNumber) {
                     map1Detail[i][1] += 10;
                 }
-            }else{
+            } else {
                 map2Detail[i][0] = card.getPower();
                 map2Detail[i][1] = card.getDamage() / card.getDuration();
                 //afzayesh damage baray character

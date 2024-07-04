@@ -71,13 +71,12 @@ public class GameMenu {
     private static boolean userLogin(Matcher matcher) {
         User myUser = User.getLoggedInUser();
         matcher.find();
-        long elapsedTime = 0;
+        long elapsedTime;
         if (startTime != 0) {
             elapsedTime = System.currentTimeMillis() / 1000 - startTime;
-            if (elapsedTime >= (5L * loginAttempt)) {
+            if (elapsedTime >= (5L * loginAttempt))
                 startTime = 0;
-                elapsedTime = 0;
-            } else {
+            else {
                 System.out.println("try again in (" + ((5L * loginAttempt) - elapsedTime) + ") seconds");
                 return false;
             }
@@ -140,7 +139,7 @@ public class GameMenu {
                     matcher.find();
                     if (Integer.parseInt(matcher.group("characterNumber")) > 5 || Integer.parseInt(matcher.group("characterNumber")) < 1) {
                         System.out.println("invalid number for character");
-                    }  else if (matcher.group("user").equals("1")) {
+                    } else if (matcher.group("user").equals("1")) {
                         charNumber1 = Integer.parseInt(matcher.group("characterNumber"));
                         System.out.println("selected successfully for user 1");
                     } else if (matcher.group("user").equals("2")) {
@@ -149,7 +148,7 @@ public class GameMenu {
                     } else {
                         System.out.println("invalid user");
                     }
-                }else if (input.equals("5")) {
+                } else if (input.equals("5")) {
                     if (charNumber1 == 0 || charNumber2 == 0) {
                         System.out.println("both need to select character");
                     } else {
@@ -172,8 +171,8 @@ public class GameMenu {
         XPCounter1 += user1.getXP();
         XPCounter2 += user2.getXP();
         //------------------------------ show map
-        printMap(GameController.map1,1);
-        printMap(GameController.map2,2);
+        printMap(GameController.map1, 1);
+        printMap(GameController.map2, 2);
         //------------------------------ show HP
         System.out.println("User 1 HP : " + user1.getHP());
         System.out.println("User 2 HP : " + user2.getHP());
@@ -186,7 +185,7 @@ public class GameMenu {
         GC.generateRandomCards(user2);
         //------------------------------
         while (true) {
-            if(turn==-1)
+            if (turn == -1)
                 break;
             //------------------------------ show Rounds
             System.out.println("User 1 rounds : " + round1);
@@ -196,7 +195,7 @@ public class GameMenu {
             printDeck(user1);
             System.out.println("user2 deck :");
             printDeck(user2);
-            System.out.println("user " + ((turn%2)+1) + " turn");
+            System.out.println("user " + ((turn % 2) + 1) + " turn");
             String input = scanner.nextLine();
             if (input.matches(Regexes.selectCard.pattern)) {
                 Matcher matcher = getCommandMatcher(input, Regexes.selectCard.pattern);
@@ -226,19 +225,19 @@ public class GameMenu {
         }
     }
 
-    public static void printMap(int[] numbers ,int n) {
+    public static void printMap(int[] numbers, int n) {
         Random random = new Random();
         for (int i = 0; i < 21; i++) {
             numbers[i] = i + 1;
         }
-        int randomSell = random.nextInt(21) ;
+        int randomSell = random.nextInt(21);
         numbers[randomSell] = 0;
-        if(n==1){
-            GameController.map1Detail[randomSell][0] = -1 ;
-            GameController.map1Detail[randomSell][1] = -1 ;
-        }else{
-            GameController.map2Detail[randomSell][0] = -1 ;
-            GameController.map2Detail[randomSell][1] = -1 ;
+        if (n == 1) {
+            GameController.map1Detail[randomSell][0] = -1;
+            GameController.map1Detail[randomSell][1] = -1;
+        } else {
+            GameController.map2Detail[randomSell][0] = -1;
+            GameController.map2Detail[randomSell][1] = -1;
         }
         for (int number : numbers) {
             if (number == 0)
@@ -277,7 +276,7 @@ public class GameMenu {
                 Card card = user1.getRandomCardByNumber(cardNumber - 1);
                 if (GC.placeable(blockNumber, card, GameController.map1)) {
                     System.out.println("card placed");
-                    GameController.map1 = GC.placeCard(GameController.map1, card, blockNumber, charNumber1 , 1);
+                    GameController.map1 = GC.placeCard(GameController.map1, card, blockNumber, charNumber1, 1);
                     user1.removeFromRandomCard(card);
                     GC.generateRandomCard(user1);
                     printBlock();
@@ -289,7 +288,7 @@ public class GameMenu {
                 Card card = user2.getRandomCardByNumber(cardNumber - 1);
                 if (GC.placeable(blockNumber, card, GameController.map2)) {
                     System.out.println("card placed");
-                    GameController.map2 = GC.placeCard(GameController.map2, card, blockNumber, charNumber2 , 2);
+                    GameController.map2 = GC.placeCard(GameController.map2, card, blockNumber, charNumber2, 2);
                     user2.removeFromRandomCard(card);
                     GC.generateRandomCard(user2);
                     printBlock();
@@ -373,12 +372,12 @@ public class GameMenu {
             System.out.print("block :" + (i + 1) + " ");
             if (GC.getMapDetail(1, i, 1) > 0) {
                 user2.setHP(user2.getHP() - GC.getMapDetail(1, i, 1));
-                XPCounter2+= (GC.getMapDetail(1, i, 1)*100) ;
+                XPCounter2 += (GC.getMapDetail(1, i, 1) * 100);
                 System.out.println("-" + GC.getMapDetail(1, i, 1) + "HP from user 2 !");
                 if (user2.getHP() < 0) {
                     System.out.println("user 2 died !");
                     winner(1, bet);
-                    turn = -1 ;
+                    turn = -1;
                     return true;
                 } else {
                     System.out.println("user 2 HP : " + user2.getHP());
@@ -386,12 +385,12 @@ public class GameMenu {
             }
             if (GC.getMapDetail(2, i, 1) > 0) {
                 user1.setHP(user1.getHP() - GC.getMapDetail(2, i, 1));
-                XPCounter1+= (GC.getMapDetail(1, i, 1)*100) ;
+                XPCounter1 += (GC.getMapDetail(1, i, 1) * 100);
                 System.out.println("-" + GC.getMapDetail(2, i, 1) + "HP from user 1 !");
                 if (user1.getHP() < 0) {
                     System.out.println("user 1 died !");
                     winner(2, bet);
-                    turn = -1 ;
+                    turn = -1;
                     return true;
                 } else {
                     System.out.println("user 1 HP : " + user1.getHP());
@@ -430,7 +429,7 @@ public class GameMenu {
             goldReward = (user1.getLevel() * 20) + 300;
             if (bet) {
                 System.out.println("bet reward : " + betPrice);
-                user1.setGold(user1.getGold() + betPrice);
+                user2.setGold(user2.getGold() + betPrice);
                 goldReward += betPrice;
             }
         }
