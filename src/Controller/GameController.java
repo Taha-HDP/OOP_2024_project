@@ -12,8 +12,8 @@ public class GameController {
     public static int[][] map2Detail = new int[21][2];
 
     public boolean placeable(int blockNumber, Card card, int[] map) {
-        for (int i = blockNumber - 1; i < blockNumber + card.getDuration(); i++) {
-            if (map[i] == 0) {
+        for (int i = blockNumber - 1; i < blockNumber + card.getDuration()-1; i++) {
+            if (map[i] <= 0) {
                 return false;
             }
         }
@@ -35,13 +35,15 @@ public class GameController {
 
     public void generateRandomCard(User user) {
         Random random = new Random();
-        int x = random.nextInt(user.getCards().size());
-        user.randomCards.add(user.getCardByNumber(x));
+        while (user.randomCards.size()<5){
+            int x = random.nextInt(user.getCards().size());
+            user.randomCards.add(user.getCardByNumber(x));
+        }
     }
 
     public int[] placeCard(int[] map, Card card, int blockNumber, int characterNumber, int n) {
         for (int i = blockNumber - 1; i < blockNumber + card.getDuration() - 1; i++) {
-            map[i] = 0;
+            map[i] = -1;
             if (n == 1) {
                 map1Detail[i][0] = card.getPower();
                 map1Detail[i][1] = card.getDamage() / card.getDuration();
