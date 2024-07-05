@@ -4,23 +4,19 @@ public class Card {
     private String Name, Type;
     private int Power, Damage, Duration, UpgradeLevel, UpgradeCost, level = 1, TypeNumber;
 
-    public Card(String name, int Power, int damage, int duration, int upgradeLevel, int upgradeCost, int typeNumber) {
+    public Card(String name, String type, int Power, int damage, int duration, int upgradeLevel, int upgradeCost, int typeNumber) {
         this.Name = name;
         this.Power = Power;
         this.Damage = damage;
         this.Duration = duration;
         this.UpgradeLevel = upgradeLevel;
         this.UpgradeCost = upgradeCost;
-        this.Type = "normal";
+        this.Type = type;
         this.TypeNumber = typeNumber;
     }
 
     public int getTypeNumber() {
         return TypeNumber;
-    }
-
-    public void setTypeNumber(int typeNumber) {
-        TypeNumber = typeNumber;
     }
 
     public int getLevel() {
@@ -83,7 +79,4 @@ public class Card {
         return Type;
     }
 
-    public void setType(String type) {
-        Type = type;
-    }
 }

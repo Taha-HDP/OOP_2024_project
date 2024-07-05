@@ -6,11 +6,11 @@ public class User {
     private String Username, Password, Nickname, Email;
     private final String FathersName, Color, Pet;
     private static User loggedInUser = null;
-    private boolean firstLogin = true;
+    private boolean firstLogin = true, ShowDeck;
     private int Level = 1, XP = 0, Gold = 1000, HP = 100;
     private final ArrayList<Card> cards = new ArrayList<>();
     public ArrayList<Card> randomCards = new ArrayList<>();
-    ArrayList<Game> games = new ArrayList<>() ;
+    ArrayList<Game> games = new ArrayList<>();
 
     public User(String username, String password, String nickname, String email, String fathersName, String color, String pet) {
         this.Username = username;
@@ -21,41 +21,44 @@ public class User {
         this.Color = color;
         this.Pet = pet;
     }
-    public Card getCardByNumber(int number){
-        return cards.get(number) ;
+
+    public boolean isShowDeck() {
+        return ShowDeck;
     }
-    public Card getRandomCardByNumber(int number){
-        return randomCards.get(number) ;
+
+    public void setShowDeck(boolean showDeck) {
+        ShowDeck = showDeck;
     }
-    public ArrayList<Card> getRandomCards(){
-        return this.randomCards ;
+
+    public Card getCardByNumber(int number) {
+        return cards.get(number);
+    }
+
+    public Card getRandomCardByNumber(int number) {
+        return randomCards.get(number);
+    }
+
+    public ArrayList<Card> getRandomCards() {
+        return this.randomCards;
     }
 
     public void setRandomCards(ArrayList<Card> randomCards) {
         this.randomCards = randomCards;
     }
 
-    public ArrayList<Game> getGames() {
-        return games;
-    }
-    public void removeFromRandomCard(Card card){
-        randomCards.remove(card) ;
+    public void removeFromRandomCard(Card card) {
+        randomCards.remove(card);
     }
 
-    public void setGames(ArrayList<Game> games) {
-        this.games = games;
-    }
-    public void addGames(Game game){
-        games.add(game) ;
-    }
-    public Card getFromRandomCard(Card card){
-        for(Card target : randomCards){
-            if(target.equals(card)){
-                return target ;
+    public Card getFromRandomCard(Card card) {
+        for (Card target : randomCards) {
+            if (target.equals(card)) {
+                return target;
             }
         }
-        return null ;
+        return null;
     }
+
     public int getHP() {
         return HP;
     }

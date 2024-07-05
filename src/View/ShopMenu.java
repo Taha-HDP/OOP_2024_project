@@ -2,8 +2,11 @@ package View;
 
 import Controller.CardController;
 import Model.Card;
+import Model.SQL;
 import Model.User;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -62,12 +65,26 @@ public class ShopMenu {
                 System.out.println("invalid input");
             } else {
                 int cardNumber = Integer.parseInt(input) - 1;
-                Card mainCard = visibleCard.get(cardNumber);
-                if (myUser.getCard(mainCard) != null) {
+                Card card = visibleCard.get(cardNumber);
+                if (myUser.getCard(card) != null) {
                     System.out.println("you already have this card !");
-                } else if (myUser.getGold() >= mainCard.getUpgradeCost()) {
-                    myUser.setGold(User.getLoggedInUser().getGold() - mainCard.getUpgradeCost());
-                    myUser.addCards(mainCard);
+                } else if (myUser.getGold() >= card.getUpgradeCost()) {
+                    int gold = User.getLoggedInUser().getGold() - card.getUpgradeCost();
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        Connection c = SQL.c;
+                        Statement stmt = SQL.stmt;
+                        c.setAutoCommit(false);
+                        String editGold = "UPDATE User SET Gold = '" + gold + "' WHERE username = '" + myUser.getUsername() + "'";
+                        String addCard = "INSERT INTO " + myUser.getUsername() + " (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "VALUES ('" + card.getName() + "', 'normal', " + card.getPower() + " , " + card.getDamage() + " , " + card.getDuration() + " , " + card.getUpgradeLevel() + " , " + card.getUpgradeCost() + " , " + card.getLevel() + " , " + card.getTypeNumber() + " );";
+                        stmt.executeUpdate(editGold);
+                        stmt.executeUpdate(addCard);
+                        c.commit();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    myUser.setGold(gold);
+                    myUser.addCards(card);
                     System.out.println("successfully added");
                 } else {
                     System.out.println("you dont have enough gold");
@@ -99,8 +116,23 @@ public class ShopMenu {
                 if (myUser.getLevel() < mainCard.getUpgradeLevel()) {
                     System.out.println("you need to level up to level: " + mainCard.getUpgradeLevel() + "then you can upgrade your card");
                 } else if (myUser.getGold() >= mainCard.getUpgradeCost() * 1.25 * (mainCard.getLevel() + 1)) {
-                    myUser.setGold((int) (User.getLoggedInUser().getGold() - (mainCard.getUpgradeCost() * 1.25 * (mainCard.getLevel() + 1))));
-                    myUser.getCard(mainCard).setLevel(myUser.getCard(mainCard).getLevel() + 1);
+                    int newLevel = myUser.getCard(mainCard).getLevel() + 1;
+                    int newGold = (int) (User.getLoggedInUser().getGold() - (mainCard.getUpgradeCost() * 1.25 * (mainCard.getLevel() + 1)));
+                    try {
+                        Class.forName("org.sqlite.JDBC");
+                        Connection c = SQL.c;
+                        Statement stmt = SQL.stmt;
+                        c.setAutoCommit(false);
+                        String editLevel = "UPDATE " + myUser.getUsername() + " SET Level = '" + newLevel + "' WHERE CardName = '" + mainCard.getName() + "'";
+                        String editGold = "UPDATE User SET Gold = '" + newGold + "' WHERE username = '" + myUser.getUsername() + "'";
+                        stmt.executeUpdate(editLevel);
+                        stmt.executeUpdate(editGold);
+                        c.commit();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    myUser.setGold(newGold);
+                    myUser.getCard(mainCard).setLevel(newLevel);
                     System.out.println("successfully upgraded");
                 } else {
                     System.out.println("you dont have enough gold");
