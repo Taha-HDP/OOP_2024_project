@@ -34,8 +34,9 @@ public class MainMenu {
             } else if (input.equals("2")) {
                 User myUser = User.getLoggedInUser();
                 for (Card card : myUser.getCards()) {
-                    System.out.print("type: " + card.getType() + " | name: " + card.getName() + " | HP: " + card.getPower() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
+                    System.out.println("type: " + card.getType() + " | name: " + card.getName() + " | HP: " + card.getPower() + " | damage: " + card.getDamage() + " | duration: " + card.getDuration());
                 }
+
             } else if (input.equals("3")) {
                 gameHistory(User.getLoggedInUser());
             } else if (input.equals("4")) {
@@ -75,7 +76,7 @@ public class MainMenu {
                     Connection c = SQL.c;
                     Statement stmt = SQL.stmt;
                     c.setAutoCommit(false);
-                    String addCard = "INSERT INTO " + user.getUsername() + " (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "VALUES ('" + card.getName() + "', 'normal', " + card.getPower() + " , " + card.getDamage() + " , " + card.getDuration() + " , " + card.getUpgradeLevel() + " , " + card.getUpgradeCost() + " , " + card.getLevel() + " , " + card.getTypeNumber() + " );";
+                    String addCard = "INSERT INTO " + user.getUsername() + " (CardName,CardType,Power,Damage,Duration,UpgradeLevel,UpgradeCost,Level,TypeNumber) " + "VALUES ('" + card.getName() + "','"+ card.getType()+"', " + card.getPower() + " , " + card.getDamage() + " , " + card.getDuration() + " , " + card.getUpgradeLevel() + " , " + card.getUpgradeCost() + " , " + card.getLevel() + " , " + card.getTypeNumber() + " );";
                     String editFL = "UPDATE User SET FL = false WHERE Username = '" + user.getUsername() + "'";
                     stmt.executeUpdate(addCard);
                     stmt.executeUpdate(editFL);

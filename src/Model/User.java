@@ -6,7 +6,7 @@ public class User {
     private String Username, Password, Nickname, Email;
     private final String FathersName, Color, Pet;
     private static User loggedInUser = null;
-    private boolean firstLogin = true, ShowDeck;
+    private boolean firstLogin = true, ShowDeck=true;
     private int Level = 1, XP = 0, Gold = 1000, HP = 100;
     private final ArrayList<Card> cards = new ArrayList<>();
     public ArrayList<Card> randomCards = new ArrayList<>();

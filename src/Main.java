@@ -64,7 +64,7 @@ public class Main {
                 int XP = rs.getInt("XP");
                 int gold = rs.getInt("Gold");
                 boolean FL = rs.getBoolean("FL");
-                User target = new User(name, password, email, nickname, fatherName, color, pet);
+                User target = new User(name, password, nickname, email, fatherName, color, pet);
                 target.setGold(gold);
                 target.setLevel(level);
                 target.setXP(XP);

@@ -165,8 +165,8 @@ public class GameMenu {
     }
 
     private static void printData(Scanner scanner, boolean bet) {
-        user1.setHP(100 + user1.getLevel() * 10);
-        user2.setHP(100 + user1.getLevel() * 10);
+        user1.setHP(user1.getLevel() * 100);
+        user2.setHP(user1.getLevel() * 100);
         XPCounter1 += user1.getXP();
         XPCounter2 += user2.getXP();
         //------------------------------ show map
@@ -375,11 +375,11 @@ public class GameMenu {
                 break;
             case "IncreasePow":
                 randomSell = random.nextInt(21);
-                while (mapDetail[randomSell][0] == 0 || mapDetail[randomSell][0] == 500 || mapDetail[randomSell][0] == 400) {
+                while (mapDetail[randomSell][0] == 0 || mapDetail[randomSell][0] == 500 || mapDetail[randomSell][0] == 400 ||mapDetail[randomSell][0] == -1) {
                     randomSell = random.nextInt(21);
                 }
                 mapDetail[randomSell][0] += 15;
-                System.out.println("power of sell : " + (randomSell + 1) + "increased 15");
+                System.out.println("power of sell : " + (randomSell + 1) + " increased 15");
                 return true;
             case "ChangeHole":
                 randomSell = random.nextInt(21);
@@ -510,9 +510,10 @@ public class GameMenu {
         System.out.println("User 1 character : " + charNumber1);
         System.out.println("User 2 character : " + charNumber2);
         //------------------------------ create random deck cards
-        ArrayList<Card> card = new ArrayList<>();
-        user1.setRandomCards(card);
-        user2.setRandomCards(card);
+        for(int i=0 ; i<5 ; i++){
+            user1.randomCards.remove(user1.randomCards.get(i)) ;
+            user2.randomCards.remove(user2.randomCards.get(i)) ;
+        }
         GameController GC = new GameController();
         GC.generateRandomCards(user1);
         GC.generateRandomCards(user2);
@@ -522,7 +523,7 @@ public class GameMenu {
         GameController GC = new GameController();
         System.out.println("time line start moving!");
         for (int i = 0; i < 21; i++) {
-            System.out.print("block :" + (i + 1) + " ");
+            System.out.print("block : " + (i + 1) + " ");
             if (GC.getMapDetail(1, i, 1) > 0) {
                 user2.setHP(user2.getHP() - GC.getMapDetail(1, i, 1));
                 XPCounter2 += (GC.getMapDetail(1, i, 1) * 100);
@@ -535,7 +536,7 @@ public class GameMenu {
                 } else {
                     System.out.println("user 2 HP : " + user2.getHP());
                 }
-            } else if (GC.getMapDetail(1, i, 1) < 0) {
+            } else if (GC.getMapDetail(1, i, 1) < -1) {
                 user1.setHP(user1.getHP() - GC.getMapDetail(1, i, 1));
                 System.out.println("+" + GC.getMapDetail(1, i, 1) * -1 + "HP for user 1 !");
                 System.out.println("user 1 HP : " + user1.getHP());
@@ -568,9 +569,9 @@ public class GameMenu {
         if (userNumber == 1) {
             winner = user1;
             System.out.println("Game Winner : " + user1.getUsername());
-            System.out.println("XP : +" + XPCounter2 * 150);
+            System.out.println("XP : +" + XPCounter2 * 15);
             XPReward = XPCounter2 * 150;
-            System.out.println("Gold : +" + 300 + (user1.getLevel() * 20));
+            System.out.println("Gold : +" + (300 + (user1.getLevel() * 20)));
             UC.changeXP(user1, XPCounter2 * 150);
             user1.setGold(user1.getGold() + (user1.getLevel() * 20) + 300);
             goldReward = (user1.getLevel() * 20) + 300;
@@ -582,9 +583,9 @@ public class GameMenu {
         } else {
             winner = user2;
             System.out.println("Game Winner : " + user2.getUsername());
-            System.out.println("XP : +" + XPCounter1 * 150);
+            System.out.println("XP : +" + XPCounter1 * 15);
             XPReward = XPCounter2 * 150;
-            System.out.println("Gold : +" + user2.getLevel() * 20);
+            System.out.println("Gold : +" + ((user2.getLevel() * 20)+300));
             UC.changeXP(user2, XPCounter1 * 150);
             UC.changeGold(user2, (user2.getLevel() * 20) + 300);
             goldReward = (user1.getLevel() * 20) + 300;
@@ -596,10 +597,10 @@ public class GameMenu {
         }
         System.out.println("-------------------------------------------------");
         System.out.println("reward for looser :");
-        System.out.println("XP : +" + 50);
-        System.out.println("Gold : +" + user2.getLevel() * 5);
-        UC.changeXP(user2, 50);
-        UC.changeGold(user2, user2.getLevel() * 5);
+        System.out.println("XP : +" + 500);
+        System.out.println("Gold : +" + user2.getLevel() * 50);
+        UC.changeXP(user2, 500);
+        UC.changeGold(user2, user2.getLevel() * 50);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         Game.games.add(new Game(user1.getUsername(), user2.getUsername(), dtf.format(now), winner, XPReward, goldReward));
@@ -608,7 +609,7 @@ public class GameMenu {
             Connection c = SQL.c;
             Statement stmt = SQL.stmt;
             c.setAutoCommit(false);
-            String addGame = "INSERT INTO GAME (Player1,Player2,Date,XP,Gold,Winner) " + "VALUES ('" + user1.getUsername() + "', '" + user2.getUsername() + "', '" + dtf.format(now) + "' , '" + XPReward + "' , " + goldReward + " , " + winner.getUsername() + " );";
+            String addGame = "INSERT INTO GAME (Player1,Player2,Date,XP,Gold,Winner) " + "VALUES ('" + user1.getUsername() + "', '" + user2.getUsername() + "', '" + dtf.format(now) + "' , '" + XPReward + "' , " + goldReward + " , '" + winner.getUsername() + "' );";
             stmt.executeUpdate(addGame);
             c.commit();
         } catch (Exception e) {
